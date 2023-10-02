@@ -23,15 +23,15 @@ class CustomUserAdmin(UserAdmin):
         },
     )
 
-    list_display = ("id", "student_id", "first_name", "last_name", "email")
-    list_display_links = ("student_id",)
+    list_display = ("id", "full_name", "email")
+    list_display_links = ("id", "email")
     list_filter = ("date_joined", "is_staff", "is_active", "is_superuser")
     fieldsets = (
         (
             _("personal information"),
             {
                 "fields": (
-                    ("id", "student_id"),
+                    "id",
                     ("first_name", "last_name"),
                     ("email", "phone_number"),
                 )
@@ -54,7 +54,6 @@ class CustomUserAdmin(UserAdmin):
             {
                 "classes": ("wide",),
                 "fields": (
-                    "student_id",
                     "email",
                     ("first_name", "last_name"),
                     ("password1", "password2"),
@@ -63,7 +62,7 @@ class CustomUserAdmin(UserAdmin):
         ),
     )
     readonly_fields = ("id", "date_joined", "last_login", "password")
-    search_fields = ("id", "first_name", "last_name", "phone_number", "email", "student_id")
+    search_fields = ("id", "first_name", "last_name", "phone_number", "email")
     ordering = ["-date_joined"]
     save_as_continue = False
     actions = [

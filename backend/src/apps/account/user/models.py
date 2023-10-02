@@ -9,16 +9,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(verbose_name=_("First Name"), max_length=128, blank=True)
     last_name = models.CharField(verbose_name=_("Last Name"), max_length=128, blank=True)
 
-    student_id = models.CharField(
-        verbose_name=_("Student ID"),
-        max_length=16,
-        unique=True,
-        null=True,
-        default=None,
-        error_messages=dict(
-            unique=_("A user with this student ID already exists."),
-        )
-    )
     email = models.EmailField(
         verbose_name=_("Email Address"),
         unique=True,
@@ -63,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _("Users")
 
     def __str__(self) -> str:
-        return f"{self.display_name or self.full_name} <{self.email}>"
+        return f"{self.full_name} <{self.email}>"
 
     def clean(self):
         super().clean()
