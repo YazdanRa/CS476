@@ -1,0 +1,48 @@
+version: "3.8"
+
+
+services:
+  db:
+    image: postgres:16-alpine
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: backend
+    env_file:
+      - backend/.env
+    volumes:
+      - ${beckend_ROOT:-backend}:/usr/app
+      - ~/.ipython:/root/ipython
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    command: >
+      gunicorn src.election.wsgi:application
+        --name backend-gunicorn
+        --bind 0.0.0.0:8000
+        --workers 4
+        --pythonpath /usr/app/src
+        --log-level=debug
+        --reload
+        --timeout 120
+
+  frontend:
+    build: frontend
+    env_file:
+      - frontend/.env
+    volumes:
+      - ${frontend_ROOT:-frontend}:/usr/app
+    ports:
+      - "3000:3000"
+
+
+volumes:
+  dbdata:
