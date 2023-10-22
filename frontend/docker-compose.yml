@@ -1,0 +1,12 @@
+version: "3.8"
+
+
+services:
+  frontend:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - ${frontend_ROOT:-.}:/usr/app
+    ports:
+      - "3000:3000"
