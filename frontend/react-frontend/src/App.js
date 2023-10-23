@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';
 import Reset from './components/Reset';
+import Profile from './components/Profile';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/reset" element={<Reset />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
