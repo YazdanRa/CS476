@@ -1,35 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Dashboard.css';
 
 function Dashboard() {
-  // Define the handleLogout function
-  const handleLogout = () => {
-    // Implement logout logic here
-    console.log('Logged out');
-  };
-
-  return (
-    <div className="dashboard-container">
-      <div className="dashboard-header">
-        <h1>Welcome to Your Dashboard</h1>
-        <button className="logout-button" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-      <div className="dashboard-content">
-        {/* Display dashboard content here */}
-        <div className="dashboard-card">
-          <h2>Card 1</h2>
-          {/* Card content */}
+    return (
+        <div className="survey-container">
+            <div className="sidebar">
+                <div className="profile-icon"></div>
+                <ul>
+                    <li>Profile Setting</li>
+                    <li>Voting History</li>
+                    <li>Survey History</li>
+                    <li>Support</li>
+                    <li>Logout</li>
+                </ul>
+            </div>
+            <div className="main-content">
+                <div className="card vote-card">
+                    <h2>Vote</h2>
+                    <p>Enter the survey code and vote</p>
+                    <input type="text" placeholder="Survey Code" />
+                </div>
+                <div className="card create-card">
+                    <h2>Create a Survey</h2>
+                    <p>Create and share a survey</p>
+                    <button>Create</button>
+                </div>
+            </div>
         </div>
-        <div className="dashboard-card">
-          <h2>Card 2</h2>
-          {/* Card content */}
-        </div>
-        {/* Add more cards or widgets as needed */}
-      </div>
-    </div>
-  );
+    );
 }
 
 export default Dashboard;
