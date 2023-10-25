@@ -18,7 +18,7 @@ class RecordVoteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vote
-        exclude = ["id", "selected_option", "display_selected_option", "last_modified"]
+        exclude = ["id", "selected_option", "last_modified"]
 
     def validate_selected_options(self, selected_options: List[VoteOption]) -> List[VoteOption]:
         for selected_option in selected_options:
