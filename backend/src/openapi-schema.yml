@@ -47,6 +47,54 @@ paths:
           description: ''
       tags:
       - user
+  /elections/:
+    get:
+      operationId: listElections
+      description: ''
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ElectionProxy'
+          description: ''
+      tags:
+      - elections
+  /elections/{id}/:
+    get:
+      operationId: retrieveElection
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this Election.
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Election'
+          description: ''
+      tags:
+      - elections
   /auth/otp/request:
     post:
       operationId: createRequestOneTimePassword
@@ -160,6 +208,62 @@ paths:
           description: ''
       tags:
       - auth
+  /elections/create:
+    post:
+      operationId: createCreateElection
+      description: Create election gateway
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateElection'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CreateElection'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateElection'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateElection'
+          description: ''
+      tags:
+      - elections
+  /elections/{id}/recordVote:
+    post:
+      operationId: createRecordVote
+      description: ''
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecordVote'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecordVote'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecordVote'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordVote'
+          description: ''
+      tags:
+      - elections
 components:
   schemas:
     User:
@@ -218,6 +322,92 @@ components:
       required:
       - id
       - name
+    ElectionProxy:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 256
+        description:
+          type: string
+          nullable: true
+          maxLength: 2048
+        from_date:
+          type: string
+          format: date-time
+        to_date:
+          type: string
+          format: date-time
+        status:
+          type: string
+          readOnly: true
+      required:
+      - title
+      - from_date
+      - to_date
+    Election:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        status:
+          type: string
+          readOnly: true
+        vote_options:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                readOnly: true
+              title:
+                type: string
+                maxLength: 256
+              description:
+                type: string
+                nullable: true
+                maxLength: 2048
+            required:
+            - title
+          readOnly: true
+        can_vote:
+          type: string
+          readOnly: true
+        creator:
+          type: string
+          readOnly: true
+        can_see_results:
+          type: string
+          readOnly: true
+        title:
+          type: string
+          maxLength: 256
+        description:
+          type: string
+          nullable: true
+          maxLength: 2048
+        can_choose_multiple_options:
+          type: boolean
+        from_date:
+          type: string
+          format: date-time
+        to_date:
+          type: string
+          format: date-time
+        associated_groups:
+          type: array
+          items:
+            type: integer
+          description: Groups that can vote in this election
+      required:
+      - title
+      - from_date
+      - to_date
     Register:
       type: object
       properties:
@@ -253,3 +443,138 @@ components:
       required:
       - email
       - password
+    CreateElection:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 256
+        description:
+          type: string
+          maxLength: 2048
+        associated_groups:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+            required:
+            - id
+            - name
+        can_choose_multiple_options:
+          type: boolean
+        from_date:
+          type: string
+          format: date-time
+        to_date:
+          type: string
+          format: date-time
+        options:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+                maxLength: 256
+              description:
+                type: string
+                nullable: true
+                maxLength: 2048
+            required:
+            - title
+      required:
+      - title
+      - description
+      - associated_groups
+      - can_choose_multiple_options
+      - from_date
+      - to_date
+      - options
+    RecordVote:
+      type: object
+      properties:
+        election:
+          type: object
+          properties:
+            id:
+              type: integer
+              readOnly: true
+            status:
+              type: string
+              readOnly: true
+            vote_options:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  title:
+                    type: string
+                    maxLength: 256
+                  description:
+                    type: string
+                    nullable: true
+                    maxLength: 2048
+                required:
+                - title
+              readOnly: true
+            can_vote:
+              type: string
+              readOnly: true
+            creator:
+              type: string
+              readOnly: true
+            can_see_results:
+              type: string
+              readOnly: true
+            title:
+              type: string
+              maxLength: 256
+            description:
+              type: string
+              nullable: true
+              maxLength: 2048
+            can_choose_multiple_options:
+              type: boolean
+            from_date:
+              type: string
+              format: date-time
+            to_date:
+              type: string
+              format: date-time
+            associated_groups:
+              type: array
+              items:
+                type: integer
+              description: Groups that can vote in this election
+          required:
+          - title
+          - from_date
+          - to_date
+          readOnly: true
+        voter:
+          type: object
+          properties:
+            id:
+              type: integer
+              readOnly: true
+            first_name:
+              type: string
+              maxLength: 128
+            last_name:
+              type: string
+              maxLength: 128
+          readOnly: true
+        date_voted:
+          type: string
+          format: date-time
+          readOnly: true
