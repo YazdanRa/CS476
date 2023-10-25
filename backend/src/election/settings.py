@@ -17,7 +17,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -44,6 +43,7 @@ INSTALLED_APPS = [
     # 1st party apps
     "apps.account.user",
     "apps.account.authentication",
+    "apps.polling",
 
     # 3rd party apps
     "corsheaders",
@@ -102,12 +102,11 @@ DATABASES = {
         "ENGINE": "django_prometheus.db.backends.postgresql",
         "HOST": getenv("DB_HOST", "db"),
         "PORT": getenv("GCP_CLOUDSQL_DATABASE_PORT", "5432"),
-        "NAME": getenv("DB_NAME", "urelection"),
+        "NAME": getenv("DB_NAME", "election"),
         "USER": getenv("DB_USER", "postgres"),
         "PASSWORD": getenv("DB_PASS", "postgres"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -126,7 +125,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -187,8 +185,7 @@ REST_FRAMEWORK = {
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CSRF_TRUSTED_ORIGINS = ["https://api.election.yazdanra.com", "https://127.0.0.1", "https://localhost"]
-
+CSRF_TRUSTED_ORIGINS = ["https://api.cs476.yazdanra.com", "https://127.0.0.1", "https://localhost"]
 
 # Email
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

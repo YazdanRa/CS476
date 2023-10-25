@@ -30,6 +30,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include("apps.account.authentication.urls")),
     path("user/", include("apps.account.user.urls")),
+    path("elections/", include("apps.polling.urls")),
     path("", include("django_prometheus.urls")),
 ]
 
