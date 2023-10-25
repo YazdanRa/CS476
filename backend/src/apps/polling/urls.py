@@ -11,7 +11,6 @@ urlpatterns = [
             [
                 path("", views.ElectionDetailView.as_view(), name="election-detail"),
                 path("recordVote", views.RecordVoteView.as_view(), name="record-vote"),
-                path("hasUserVoted", views.HasUserVotedView.as_view(), name="has-user-voted"),
             ]
         )
     )
