@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom'; // Import Navigate
 import './CSS/Signup.css';
 
 function SignUp() {
@@ -6,10 +7,13 @@ function SignUp() {
     fullName: '',
     username: '',
     password: '',
+    cpassword: '',
     email: '',
     dateOfBirth: '',
     profileImage: null
   });
+
+  const [redirectToHome, setRedirectToHome] = useState(false); // State to manage redirection
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -23,7 +27,12 @@ function SignUp() {
 
   const handleSubmit = () => {
     console.log('Form data submitted:', formData);
+    setRedirectToHome(true); // Set redirection to true after your logic
   };
+
+  if (redirectToHome) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div className="signup-container">
@@ -67,6 +76,14 @@ function SignUp() {
       />
       <input 
         className="input-container"
+        type="password" 
+        placeholder="Confirm Password" 
+        name="cpassword" 
+        value={formData.cpassword} 
+        onChange={handleChange}
+      />
+      <input 
+        className="input-container"
         type="email" 
         placeholder="Email" 
         name="email" 
@@ -81,7 +98,7 @@ function SignUp() {
         value={formData.dateOfBirth} 
         onChange={handleChange}
       />
-      <button className="input-container" onClick={handleSubmit}>Sign Up</button>
+        <button className="signup-button" onClick={handleSubmit}>Sign Up</button>
     </div>
   );
 }

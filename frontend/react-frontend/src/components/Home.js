@@ -17,7 +17,7 @@ function HomeForm() {
       </Link>
 
       <Link to = "/signup">
-        <button className="signup-button">Sign Up</button>
+        <button className="signup-button_home">Sign Up</button>
       </Link>
 
     </div>
