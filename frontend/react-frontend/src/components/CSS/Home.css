@@ -4,7 +4,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #e6e6e6;  /* Added a light grey background for contrast */
+  background-color: #e6e6e6; 
 }
 
 .login-container {
@@ -39,21 +39,16 @@ body {
   text-decoration: none;
 }
 
-.login-button, .signup-button {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  cursor: pointer;
-}
-
 .login-button {
   background-color: #0047ab;
   color: #ffffff;
+  width: 300px;
+  height: 35px;
 }
 
 .signup-button {
   background-color: #4caf50;
   color: #ffffff;
+  width: 300px;
+  height: 35px;
 }
