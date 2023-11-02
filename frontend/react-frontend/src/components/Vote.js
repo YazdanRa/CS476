@@ -1,5 +1,5 @@
 import React from 'react';
-import './Vote.css';
+import './CSS/Vote.css';
 
 function SurveyPage() {
     return (

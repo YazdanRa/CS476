@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Signup.css';
+import './CSS/Signup.css';
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -22,7 +22,6 @@ function SignUp() {
   };
 
   const handleSubmit = () => {
-    // Handle the sign up logic here
     console.log('Form data submitted:', formData);
   };
 
@@ -43,13 +42,15 @@ function SignUp() {
         <span>Upload Picture</span>
       </div>
       <input 
-        type="text" 
+        className="input-container"
+        type="text"
         placeholder="Full Name" 
         name="fullName" 
         value={formData.fullName} 
         onChange={handleChange}
       />
       <input 
+        className="input-container"
         type="text" 
         placeholder="Username" 
         name="username" 
@@ -57,6 +58,7 @@ function SignUp() {
         onChange={handleChange}
       />
       <input 
+        className="input-container"
         type="password" 
         placeholder="Password" 
         name="password" 
@@ -64,6 +66,7 @@ function SignUp() {
         onChange={handleChange}
       />
       <input 
+        className="input-container"
         type="email" 
         placeholder="Email" 
         name="email" 
@@ -71,13 +74,14 @@ function SignUp() {
         onChange={handleChange}
       />
       <input 
+        className="input-container"
         type="date" 
         placeholder="Date of Birth" 
         name="dateOfBirth" 
         value={formData.dateOfBirth} 
         onChange={handleChange}
       />
-      <button onClick={handleSubmit}>Sign Up</button>
+      <button className="input-container" onClick={handleSubmit}>Sign Up</button>
     </div>
   );
 }

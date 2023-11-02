@@ -1,5 +1,5 @@
 import React from 'react';
-import './Report.css';
+import './CSS/Report.css';
 
 function SurveyReport() {
     return (
