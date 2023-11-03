@@ -1,5 +1,5 @@
 import React from 'react';
-import './History.css';
+import './CSS/History.css';
 
 function History() {
   const historyData = [

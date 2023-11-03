@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Settings.css';
+import './CSS/Settings.css';
 
 function SurveySetting() {
     const [showResults, setShowResults] = useState(true);

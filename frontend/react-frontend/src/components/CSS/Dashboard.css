@@ -1,0 +1,148 @@
+.dropdown {
+  position: absolute;
+  top: 10px;  /* Adjust as necessary */
+  right: 10px;  /* Adjust as necessary */
+  z-index: 10;  /* Ensure dropdown appears above other content */
+}
+
+.menu-button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #007BFF;  /* Blue */
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.menu-list {
+  position: absolute;
+  top: 100%;  /* Positioned right below the button */
+  right: 0;
+  width: 180px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  margin-top: 5px;
+}
+
+.menu-list a {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+}
+
+.menu-list a:last-child {
+  border-bottom: none;
+}
+
+.menu-list a:hover {
+  background-color: #f2f2f2;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;  /* Some space between dropdown and containers */
+}
+
+.create-survey-container {
+  display: flex;
+  flex-direction: column;  /* Stack items vertically */
+  align-items: center;     /* Center-align items horizontally */
+  justify-content: center; /* Center-align items vertically */
+  padding: 20px;           /* Adjust as needed */
+  border: 1px solid #ccc;  /* Adjust as needed */
+  border-radius: 5px;      /* Adjust as needed */
+  padding: 20px;
+  width: 250px;
+  background-color: #FFE5E9;  /* Light red */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.vote-container {
+  display: flex;
+  flex-direction: column;  /* Stack items vertically */
+  align-items: center;     /* Center-align items horizontally */
+  justify-content: center; /* Center-align items vertically */
+  padding: 20px;           /* Adjust as needed */
+  border: 1px solid #ccc;  /* Adjust as needed */
+  border-radius: 5px;      /* Adjust as needed */
+  padding: 20px;
+  width: 250px;
+  background-color: #E5F2FD; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #F04D56;  /* Red */
+  color: white;
+  cursor: pointer;
+}
+
+.subtext {
+  margin-top: 5px;
+  margin-bottom: 15px;
+  font-size: 0.9em;
+  color: #888;
+}
+
+.vote-container button {
+  background-color: #007BFF;  /* Blue */
+}
+
+input[type="text"] {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.input-container input,
+.input-container button {
+  box-sizing: border-box;
+  height: 35px;  /* Adjust as needed */
+  border: 1px solid #ccc;
+  padding: 5px 10px;  
+  font-size: 16px;  
+}
+
+.input-container input {
+  flex-grow: 1;
+  border-right: none;  /* Remove the right border since the button will be adjacent */
+}
+
+.input-container button {
+  width: 40px;  
+  border: none;
+  background-color: #007BFF;
+  color: #fff;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.forward-button{
+  margin-bottom: 12px;
+}

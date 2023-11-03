@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import './Signup.css';
+import { Navigate } from 'react-router-dom'; // Import Navigate
+import './CSS/Signup.css';
 
 function SignUp() {
   const [formData, setFormData] = useState({
     fullName: '',
     username: '',
     password: '',
+    cpassword: '',
     email: '',
     dateOfBirth: '',
     profileImage: null
   });
+
+  const [redirectToHome, setRedirectToHome] = useState(false); // State to manage redirection
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -22,9 +26,13 @@ function SignUp() {
   };
 
   const handleSubmit = () => {
-    // Handle the sign up logic here
     console.log('Form data submitted:', formData);
+    setRedirectToHome(true); // Set redirection to true after your logic
   };
+
+  if (redirectToHome) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <div className="signup-container">
@@ -43,13 +51,15 @@ function SignUp() {
         <span>Upload Picture</span>
       </div>
       <input 
-        type="text" 
+        className="input-container"
+        type="text"
         placeholder="Full Name" 
         name="fullName" 
         value={formData.fullName} 
         onChange={handleChange}
       />
       <input 
+        className="input-container"
         type="text" 
         placeholder="Username" 
         name="username" 
@@ -57,6 +67,7 @@ function SignUp() {
         onChange={handleChange}
       />
       <input 
+        className="input-container"
         type="password" 
         placeholder="Password" 
         name="password" 
@@ -64,6 +75,15 @@ function SignUp() {
         onChange={handleChange}
       />
       <input 
+        className="input-container"
+        type="password" 
+        placeholder="Confirm Password" 
+        name="cpassword" 
+        value={formData.cpassword} 
+        onChange={handleChange}
+      />
+      <input 
+        className="input-container"
         type="email" 
         placeholder="Email" 
         name="email" 
@@ -71,13 +91,14 @@ function SignUp() {
         onChange={handleChange}
       />
       <input 
+        className="input-container"
         type="date" 
         placeholder="Date of Birth" 
         name="dateOfBirth" 
         value={formData.dateOfBirth} 
         onChange={handleChange}
       />
-      <button onClick={handleSubmit}>Sign Up</button>
+        <button className="signup-button" onClick={handleSubmit}>Sign Up</button>
     </div>
   );
 }
