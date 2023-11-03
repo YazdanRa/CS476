@@ -9,8 +9,8 @@ function SurveyPage() {
     }
 
     return (
-        <div className="survey-container">
-                        <div className="dropdown">
+        <div className="create-container">
+            <div className="dropdown">
               <button onClick={toggleMenu} className="menu-button">Menu</button>
               {showMenu && (
                 <div className="menu-list">
