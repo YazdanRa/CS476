@@ -61,8 +61,27 @@ p {
     color: #555;
 }
 
+.submit-button {
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    max-width: 200px;  /* or whatever maximum width you prefer */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
 .question-block {
     margin-bottom: 30px;
+    text-align: left;  /* Align content to the left */
 }
 
 .question-block p {
@@ -72,19 +91,5 @@ p {
 
 .question-block div {
     display: inline-block;
-    margin-right: 10px;
-}
-
-button {
-    padding: 10px 15px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #0056b3;
+    margin-right: 220px;
 }

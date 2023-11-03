@@ -28,7 +28,7 @@ function SurveyPage() {
             
             {Array(4).fill().map((_, index) => (
                 <div key={index} className="question-block">
-                    <p>...?</p>
+                    <p className="question-block">...?</p>
                     {["Candidate 1", "Candidate 2", "Candidate 3", "Candidate 4"].map((candidate, cIndex) => (
                         <div key={cIndex}>
                             <input type="radio" id={`q${index}-c${cIndex}`} name={`question${index}`} value={candidate} />
@@ -38,7 +38,7 @@ function SurveyPage() {
                 </div>
             ))}
             
-            <button>Submit Answers</button>
+            <button className="submit-button">Submit Answers</button>
         </div>
     );
 }
