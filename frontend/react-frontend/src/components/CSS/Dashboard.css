@@ -132,7 +132,6 @@ input[type="text"] {
 .input-container input {
   flex-grow: 1;
   border-right: none;  /* Remove the right border since the button will be adjacent */
-  border-radius: 4px 0 0 4px;
 }
 
 .input-container button {
@@ -142,4 +141,8 @@ input[type="text"] {
   color: #fff;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
+}
+
+.forward-button{
+  margin-bottom: 12px;
 }

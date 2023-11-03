@@ -29,7 +29,7 @@ function Dashboard() {
                 <p>Enter the survey code and vote</p>
                 <div className="input-container">
                   <input type="text" placeholder="Survey Code" />
-                  <button>&rarr;</button>
+                  <button className="forward-button">&rarr;</button>
                 </div>
               </div>
 
