@@ -1,9 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './CSS/Vote.css';
 
 function SurveyPage() {
+    const [showMenu, setShowMenu] = useState(false);
+
+    const toggleMenu = () => {
+      setShowMenu(!showMenu);
+    }
+
     return (
         <div className="survey-container">
+                        <div className="dropdown">
+              <button onClick={toggleMenu} className="menu-button">Menu</button>
+              {showMenu && (
+                <div className="menu-list">
+                  <a href="#option1">Profile Setting</a>
+                  <a href="#option2">Voting History</a>
+                  <a href="#option3">Survey History</a>
+                  <a href="#option4">Support</a>
+                  <a href="#option5">Logout</a>
+                </div>
+              )}
+            </div>
+
             <h1>Survey Name</h1>
             <p>1950-01-01 to 1950-01-03 by Ministry of Magic</p>
             
