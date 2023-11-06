@@ -5,7 +5,8 @@ import Dashboard from './components/Dashboard';
 import Signup from './components/Signup';
 import Reset from './components/Reset';
 import Profile from './components/Profile';
-import History from './components/History';
+import VoteHistory from './components/VoteHistory';
+import SurveyHistory from './components/SurveyHistory';
 import Create from './components/Create';
 import Vote from './components/Vote';
 import Settings from './components/Settings';
@@ -20,7 +21,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/reset" element={<Reset />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/history" element={<History />} />
+        <Route path="/vhistory" element={<VoteHistory />} />
+        <Route path="/shistory" element={<SurveyHistory />} />
         <Route path="/create" element={<Create />} />
         <Route path="/vote" element={<Vote />} />
         <Route path="/settings" element={<Settings />} />
