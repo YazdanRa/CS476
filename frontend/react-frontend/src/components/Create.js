@@ -32,21 +32,29 @@ function NewSurvey() {
             <h1>New Survey</h1>
 
             <label>Title:</label>
+            <div className="title-input">
             <input type="text" />
+            </div>
 
             <label>Candidates:</label>
-            {candidates.map((_, index) => (
-                <div key={index}>
-                    <input type="text" placeholder="Enter candidate name" />
-                </div>
-            ))}
-            <button onClick={addCandidate} className="add-button">+</button>
+    <div className="candidate-input">
+        {candidates.map((_, index) => (
+            <input key={index} type="text" placeholder="Enter candidate name" />
+        ))}
+    </div>
+    <button onClick={addCandidate} className="add-button">+</button>
 
+    <div className="date-inputs-container">
+        <div className="from-input">
             <label>From:</label>
             <input type="date" />
+        </div>
+    </div>
 
+            <div className="to-input">
             <label>To:</label>
             <input type="date" />
+            </div>
 
             <div className="show-results">
                 <label>Show result to participants after the end date: </label>
@@ -54,12 +62,14 @@ function NewSurvey() {
                 <input type="radio" name="showResults" value="No" /> No
             </div>
 
+            <div className="question-input">
             {questions.map((_, index) => (
                 <div key={index}>
                     <label>Question {index + 1}:</label>
                     <input type="text" placeholder="Enter your question" />
                 </div>
             ))}
+            </div>
             <button onClick={addQuestion} className="add-button">+</button>
 
             <button className="create-button">Create Survey</button>
@@ -70,4 +80,4 @@ function NewSurvey() {
     );
 }
 
-export default NewSurvey;
+export default NewSurvey;  

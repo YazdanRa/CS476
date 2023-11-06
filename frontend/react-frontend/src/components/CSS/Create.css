@@ -84,13 +84,23 @@ p {
     padding: 5px 10px;
     font-size: 20px;
     margin: 10px 0;
+    width: 5%;
 }
 
-input[type="text"] {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
+.candidate-input, .question-input, .title-input {
+    width: 50%; /* Set the width to 50% of its parent */
+    padding-right: 20px; /* Add some spacing to the right */
     box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    display: inline-block; /* This will allow elements to sit side by side */
+}
+
+.show-results{
+    margin-bottom: 20px;
+}
+
+.from-input, .to-input{
+    width: 25%; /* Set the width to 50% of its parent */
+    padding-right: 20px; /* Add some spacing to the right */
+    box-sizing: border-box;
+    display: inline-block; /* This will allow elements to sit side by side */
 }
