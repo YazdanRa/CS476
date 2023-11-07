@@ -5,6 +5,11 @@ from django.utils.translation import gettext_lazy as _
 from apps.account.user.managers import CustomUserManager
 
 
+def upload_profile_place_pics(instance, filename):
+    ext = filename.split(".")[-1].lower()
+    return "profile_images/{user}.{ext}".format(user=instance.pk, ext=ext)
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     full_name = models.CharField(verbose_name=_("Full Name"), max_length=256, blank=True)
 
@@ -14,6 +19,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         error_messages=dict(
             unique=_("A user with this email address already exists."),
         ),
+    )
+
+    profile_picture = models.ImageField(
+        verbose_name=_("Profile Picture"),
+        upload_to=upload_profile_place_pics,
+        null=True,
+        blank=True,
     )
 
     is_staff = models.BooleanField(
