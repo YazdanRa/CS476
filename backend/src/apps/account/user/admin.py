@@ -35,6 +35,7 @@ class CustomUserAdmin(UserAdmin):
                     "id",
                     "full_name",
                     "email",
+                    "date_of_birth",
                 )
             },
         ),
@@ -55,9 +56,11 @@ class CustomUserAdmin(UserAdmin):
             {
                 "classes": ("wide",),
                 "fields": (
-                    "email",
+                    "profile_picture",
                     "full_name",
+                    "email",
                     ("password1", "password2"),
+                    "date_of_birth",
                 ),
             },
         ),

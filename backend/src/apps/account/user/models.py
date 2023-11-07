@@ -28,6 +28,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
     )
 
+    date_of_birth = models.DateField(verbose_name=_("Date of Birth"), null=True, blank=True)
+
     is_staff = models.BooleanField(
         verbose_name=_("Staff Status"),
         default=False,
