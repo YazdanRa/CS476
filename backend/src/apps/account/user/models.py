@@ -5,9 +5,13 @@ from django.utils.translation import gettext_lazy as _
 from apps.account.user.managers import CustomUserManager
 
 
+def upload_profile_place_pics(instance, filename):
+    ext = filename.split(".")[-1].lower()
+    return "profile_images/{user}.{ext}".format(user=instance.pk, ext=ext)
+
+
 class User(AbstractBaseUser, PermissionsMixin):
-    first_name = models.CharField(verbose_name=_("First Name"), max_length=128, blank=True)
-    last_name = models.CharField(verbose_name=_("Last Name"), max_length=128, blank=True)
+    full_name = models.CharField(verbose_name=_("Full Name"), max_length=256, blank=True)
 
     email = models.EmailField(
         verbose_name=_("Email Address"),
@@ -16,16 +20,16 @@ class User(AbstractBaseUser, PermissionsMixin):
             unique=_("A user with this email address already exists."),
         ),
     )
-    phone_number = models.CharField(
-        verbose_name=_("Phone Number"),
-        max_length=16,
-        unique=True,
+
+    profile_picture = models.ImageField(
+        verbose_name=_("Profile Picture"),
+        upload_to=upload_profile_place_pics,
         null=True,
         blank=True,
-        error_messages={
-            "unique": _("A user with this phone number already exists."),
-        },
     )
+
+    date_of_birth = models.DateField(verbose_name=_("Date of Birth"), null=True, blank=True)
+
     is_staff = models.BooleanField(
         verbose_name=_("Staff Status"),
         default=False,
@@ -59,11 +63,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         super().clean()
         self.email = self.__class__.objects.normalize_email(self.email)
 
-    @property
-    def full_name(self) -> str:
-        return f"{self.first_name} {self.last_name}".strip()
-
-    def send_email(self, subject, message, from_email="URElection <consult@faustianloop.ca>", **kwargs):
+    def send_email(self, subject, message, from_email="URElection <noreply@yazdanra.com>", **kwargs):
         from django.core.mail import send_mail
 
         send_mail(subject, message, from_email, [self.email], **kwargs)

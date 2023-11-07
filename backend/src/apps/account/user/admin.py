@@ -31,9 +31,11 @@ class CustomUserAdmin(UserAdmin):
             _("personal information"),
             {
                 "fields": (
+                    ("profile_picture_tag", "profile_picture"),
                     "id",
-                    ("first_name", "last_name"),
-                    ("email", "phone_number"),
+                    "full_name",
+                    "email",
+                    "date_of_birth",
                 )
             },
         ),
@@ -54,15 +56,17 @@ class CustomUserAdmin(UserAdmin):
             {
                 "classes": ("wide",),
                 "fields": (
+                    "profile_picture",
+                    "full_name",
                     "email",
-                    ("first_name", "last_name"),
                     ("password1", "password2"),
+                    "date_of_birth",
                 ),
             },
         ),
     )
-    readonly_fields = ("id", "date_joined", "last_login", "password")
-    search_fields = ("id", "first_name", "last_name", "phone_number", "email")
+    readonly_fields = ("id", "profile_picture_tag", "date_joined", "last_login", "password")
+    search_fields = ("id", "full_name", "email")
     ordering = ["-date_joined"]
     save_as_continue = False
     actions = [
@@ -91,6 +95,12 @@ class CustomUserAdmin(UserAdmin):
         self.message_user(request, _("{} user(s) set as inactive").format(count))
 
     set_as_inactive.short_description = _("mark selected user(s) as inactive")
+
+    def profile_picture_tag(self, obj: User):
+        from django.utils.html import format_html
+        return format_html(f'<img src="{obj.profile_picture.url}" width="150" height="150"/>')
+
+    profile_picture_tag.short_description = "Profile Picture"
 
 
 admin.site.register(Permission)

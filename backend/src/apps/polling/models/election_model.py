@@ -19,10 +19,13 @@ class Election(models.Model):
         UNKNOWN = "UNKNOWN", _("Unknown")
 
     title = models.CharField(verbose_name=_("Title"), max_length=256, null=False, blank=False)
-    description = models.TextField(verbose_name=_("Description"), max_length=2048, null=True, blank=True)
 
     can_choose_multiple_options = models.BooleanField(
         verbose_name=_("Can choose multiple options"),
+        default=False
+    )
+    show_results_after_election = models.BooleanField(
+        verbose_name=_("Show results after election"),
         default=False
     )
 
