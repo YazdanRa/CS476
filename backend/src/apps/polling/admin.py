@@ -7,8 +7,8 @@ from .models import Election, VoteOption, Vote
 class ElectionAdmin(admin.ModelAdmin):
     list_display = ["id", "title", "from_date", "to_date", "status"]
     list_display_links = ["id", "title"]
-    list_filter = ["from_date", "to_date"]
-    search_fields = ["id", "title", "description"]
+    list_filter = ["from_date", "to_date", "can_choose_multiple_options", "show_results_after_election"]
+    search_fields = ["id", "title"]
     readonly_fields = ["id", "date_created", "last_modified", "status", "duration"]
 
 
@@ -17,7 +17,7 @@ class VoteOptionAdmin(admin.ModelAdmin):
     list_display = ["id", "title", "election", "votes_count", "vote_percentage"]
     list_display_links = ["id", "title"]
     list_filter = ["election", "date_created", "last_modified"]
-    search_fields = ["id", "title", "description", "election__title", "election__description"]
+    search_fields = ["id", "title", "description", "election__title"]
     readonly_fields = ["id", "votes_count", "vote_percentage", "date_created", "last_modified"]
 
 
@@ -35,7 +35,6 @@ class VoteAdmin(admin.ModelAdmin):
         "voter__email",
 
         "election__title",
-        "election__description",
 
         "selected_option__title",
     ]
