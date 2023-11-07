@@ -29,9 +29,7 @@ class VoteAdmin(admin.ModelAdmin):
     search_fields = [
         "id",
 
-        "voter__first_name",
-        "voter__last_name",
-        "voter__display_name",
+        "voter__full_name",
         "voter__email",
 
         "election__title",

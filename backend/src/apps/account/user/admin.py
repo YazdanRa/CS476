@@ -32,8 +32,8 @@ class CustomUserAdmin(UserAdmin):
             {
                 "fields": (
                     "id",
-                    ("first_name", "last_name"),
-                    ("email", "phone_number"),
+                    "full_name",
+                    "email",
                 )
             },
         ),
@@ -55,14 +55,14 @@ class CustomUserAdmin(UserAdmin):
                 "classes": ("wide",),
                 "fields": (
                     "email",
-                    ("first_name", "last_name"),
+                    "full_name",
                     ("password1", "password2"),
                 ),
             },
         ),
     )
     readonly_fields = ("id", "date_joined", "last_login", "password")
-    search_fields = ("id", "first_name", "last_name", "phone_number", "email")
+    search_fields = ("id", "full_name", "email")
     ordering = ["-date_joined"]
     save_as_continue = False
     actions = [
