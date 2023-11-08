@@ -17,11 +17,11 @@ class VoteOptionSerializer(serializers.ModelSerializer):
 class CreateElectionSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     title = serializers.CharField(max_length=256, allow_null=False, allow_blank=False)
-    description = serializers.CharField(max_length=2048, allow_null=False, allow_blank=False)
 
     associated_groups = GroupSerializer(many=True, allow_empty=True)
 
-    can_choose_multiple_options = serializers.BooleanField(allow_null=False)
+    can_choose_multiple_options = serializers.BooleanField(allow_null=False, default=False)
+    show_results_after_election = serializers.BooleanField(allow_null=False, default=False)
 
     from_date = serializers.DateTimeField()
     to_date = serializers.DateTimeField()
