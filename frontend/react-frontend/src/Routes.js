@@ -16,6 +16,7 @@ const Routes = () => {
             {isAuthorized ? (
                 <Switch>
                     <Route path="*" element={<BasePage/>}/>
+                    <Route path="/logout" element={<Logout/>}/>
                 </Switch>
             ) : (
                 <Login/>
