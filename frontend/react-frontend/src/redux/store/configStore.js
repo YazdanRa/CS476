@@ -7,7 +7,7 @@ import rootReducer from '../reducers';
 const configureStore = (preloadedState) =>
     createStore(
         rootReducer,
-        { Intl: { locale: 'en' }, ...preloadedState },
+        preloadedState,
         applyMiddleware(thunk, api)
     );
 export default configureStore;
