@@ -3,11 +3,9 @@ import axios from 'axios'
 import qs from 'qs'
 
 import {actions} from '../store/authRedux/actions'
-import {GetUserByRefresh, LogoutBlacklist} from '../services/auth'
+import {Logout} from '../services/auth'
 
 let store
-const URLBlacklist = ['/auth']
-const ENTRY_ROUTE = '/auth'
 
 export const setUpInterceptorStore = (_store) => {
     store = _store
@@ -28,10 +26,13 @@ const API = axios.create({
 // API Request interceptor
 API.interceptors.request.use(
     (config) => {
-        const access_token = store.getState().auth.access
+        const token = store.getState().auth.token;
 
-        if (access_token) {
-            config.headers['Authorization'] = `Bearer ${access_token}`
+        console.log("API Interceptor")
+        console.log(token)
+
+        if (token) {
+            config.headers['Authorization'] = `Token ${token}`
         }
 
         return config
@@ -58,25 +59,13 @@ API.interceptors.response.use(
 
         // Remove token and redirect
         else if (error.response.status === 403 || error.response.status === 401) {
-            return new Promise(async function (resolve, reject) {
-                const refreshToken = store.getState().auth.refresh
-                try {
-                    URLBlacklist.find((url) => url.includes(error.config.url))
-                        ? await GetUserByRefresh(refreshToken).then((res) => {
-                            store.dispatch(actions.refresh(res.access)).then((result) => {
-                                return API.request(error.config)
-                            })
-                        })
-                        : resolve()
-                } catch (err) {
-                    LogoutBlacklist(refreshToken)
+            Logout().then(() => {
                     store.dispatch(actions.logout())
                     notification.error({
                         message: 'Authorization Error. Login Again',
                     })
-                    reject()
                 }
-            })
+            )
         } else if (error.response.status === 404) {
             notification.error({
                 message: 'Requested Data Not Found',

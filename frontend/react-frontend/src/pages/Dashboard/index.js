@@ -14,11 +14,10 @@ function Dashboard() {
                 <button onClick={toggleMenu} className="menu-button">Menu</button>
                 {showMenu && (
                     <div className="menu-list">
-                        <a href="#option1">Profile Setting</a>
+                        <a href="/profile">Profile Setting</a>
                         <a href="#option2">Voting History</a>
                         <a href="#option3">Survey History</a>
-                        <a href="#option4">Support</a>
-                        <a href="#option5">Logout</a>
+                        <a href="/logout">Logout</a>
                     </div>
                 )}
             </div>

@@ -1,35 +1,24 @@
 export const actionTypes = {
     Login: '[Login] Action',
-    Logout: '[Logout] Action',
     Register: '[Register] Action',
-    UserRequested: '[Request User] Action',
-    UserLoaded: '[Load User] Auth API',
-    SetUser: '[Set User] Action',
-    RefreshUser: '[Refresh User] Action',
-    getRefresh: '[Refresh Access] Action',
+    Logout: '[Logout] Action',
+    UpdateUser: '[Update User] Action',
 }
 
 export const actions = {
-    login: (access, refresh) => ({
+    login: (token) => ({
         type: actionTypes.Login,
-        payload: {access, refresh},
+        payload: {token},
     }),
-    refresh: (access) => ({
-        type: actionTypes.RefreshUser,
-        payload: {access},
-    }),
-    register: (access) => ({
+    register: (token) => ({
         type: actionTypes.Register,
-        payload: {access},
+        payload: {token},
     }),
-    logout: () => ({type: actionTypes.Logout}),
-    requestUser: (user) => ({
-        type: actionTypes.UserRequested,
+    logout: () => ({
+        type: actionTypes.Logout
+    }),
+    updateUser: (user) => ({
+        type: actionTypes.UpdateUser,
         payload: {user},
     }),
-    fulfillUser: (user) => ({
-        type: actionTypes.UserLoaded,
-        payload: {user},
-    }),
-    setUser: (user) => ({type: actionTypes.SetUser, payload: {user}}),
 }

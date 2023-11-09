@@ -4,24 +4,21 @@ import {actionTypes} from './actions'
 
 const initialAuthState = {
     user: undefined,
-    access: undefined,
-    refresh: undefined,
+    token: undefined,
 }
 
 export const reducer = persistReducer(
-    {storage, key: 'panel-auth', whitelist: ['access', 'refresh', 'user']},
+    {storage, key: 'panel-auth', whitelist: ['token', 'user']},
     (state = initialAuthState, action) => {
         switch (action.type) {
             case actionTypes.Login: {
-                const {access, refresh} = action.payload
-
-                return {access, refresh, user: undefined}
+                const {token, user} = action.payload
+                return {token, user: user}
             }
 
             case actionTypes.Register: {
-                const {access} = action.payload
-
-                return {access, user: undefined}
+                const {token, user} = action.payload
+                return {token, user: user}
             }
 
             case actionTypes.Logout: {
@@ -37,10 +34,6 @@ export const reducer = persistReducer(
             case actionTypes.SetUser: {
                 const {user} = action.payload
                 return {...state, user}
-            }
-            case actionTypes.RefreshUser: {
-                const {access} = action.payload
-                return {...state, access}
             }
             default:
                 return state

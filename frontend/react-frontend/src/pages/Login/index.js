@@ -1,5 +1,5 @@
 import {Input, notification, Typography} from 'antd'
-import React, {useState} from 'react'
+import React from 'react'
 
 import {BasicLogin} from '../../services/auth'
 
@@ -30,8 +30,6 @@ const LoginForm = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [loading, setLoading] = useState(false)
-
     const formik = useFormik({
         initialValues,
         validationSchema: FormSchema,
@@ -41,18 +39,15 @@ const LoginForm = () => {
     })
 
     const _loginUser = (values) => {
-        setLoading(true)
         BasicLogin(values)
             .then((result) => {
-                setLoading(false)
-                const {access, refresh, id} = result
-                dispatch(authActions.login(access, refresh))
-                dispatch(authActions.setUser({id}))
-                notification.success({message: 'Welcome!'})
-                navigate('/')
+                const {message, token, user} = result
+                dispatch(authActions.login(token, user))
+                dispatch(authActions.updateUser(user))
+                notification.success({message: message})
+                navigate("/dashboard")
             })
             .catch((err) => {
-                setLoading(false)
                 notification.error({message: 'Email or password is wrong'})
             })
     }
@@ -68,6 +63,11 @@ const LoginForm = () => {
                 type="email"
                 placeholder="Email"
                 className="input-field"/>
+            {formik.errors.email && formik.touched.email && (
+                <Typography.Text type="danger">
+                    {formik.errors.email}
+                </Typography.Text>
+            )}
 
             <Input.Password
                 value={formik.values.password}
