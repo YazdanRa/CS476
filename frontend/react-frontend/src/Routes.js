@@ -4,11 +4,10 @@ import {Routes as Switch, Route} from 'react-router-dom'
 
 import Login from "./pages/Login";
 import BasePage from "./BasePage";
-import Logout from "./pages/Logout";
 
 const Routes = () => {
     const {isAuthorized} = useSelector(
-        ({auth}) => ({isAuthorized: auth.user != null}),
+        ({auth}) => ({isAuthorized: auth.token != null}),
         shallowEqual,
     )
     return (
@@ -16,7 +15,6 @@ const Routes = () => {
             {isAuthorized ? (
                 <Switch>
                     <Route path="*" element={<BasePage/>}/>
-                    <Route path="/logout" element={<Logout/>}/>
                 </Switch>
             ) : (
                 <Login/>
