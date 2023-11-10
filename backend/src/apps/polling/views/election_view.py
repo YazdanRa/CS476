@@ -4,10 +4,12 @@ from apps.polling.models import Election
 from apps.polling.serializers import ElectionSerializer, ElectionProxySerializer
 
 
-class ElectionsListView(ListAPIView):
+class MyElectionsListView(ListAPIView):
     serializer_class = ElectionProxySerializer
     search_fields = []
-    queryset = Election.objects.all()
+
+    def get_queryset(self):
+        return Election.objects.filter(creator=self.request.user)
 
 
 class ElectionDetailView(RetrieveAPIView):
