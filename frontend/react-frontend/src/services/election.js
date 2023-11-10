@@ -1,22 +1,32 @@
-import API from 'utils/API'
+import API from '../utils/API'
 
-const GET_MY_ELECTIONS = '/elections'
-const CREATE_ELECTION = '/elections/create'
-const GET_ELECTION = (electionId) => `/elections/${electionId}`
-const RECORD_VOTE = (electionId) => `/elections/${electionId}/recordVote`
+const GET_MY_ELECTIONS_URL = '/elections/my'
+const CREATE_ELECTION_URL = '/elections/create'
+const GET_ELECTION_BY_ID_URL = (electionId) => `/elections/${electionId}`
+const GET_ELECTION_BY_CODE_URL = (accessCode) => `/elections/${accessCode}`
+const RECORD_VOTE_URL = (electionId) => `/elections/${electionId}/recordVote`
+const VOTING_HISTORY_URL = '/elections/votingHistory'
 
 export const getMyElections = () => {
-    return API.get(GET_MY_ELECTIONS)
+    return API.get(GET_MY_ELECTIONS_URL)
 }
 
 export const createElection = (data) => {
-    return API.post(CREATE_ELECTION, data)
+    return API.post(CREATE_ELECTION_URL, data)
 }
 
-export const getElection = (electionId) => {
-    return API.get(GET_ELECTION(electionId))
+export const getElectionById = (electionId) => {
+    return API.get(GET_ELECTION_BY_ID_URL(electionId))
+}
+
+export const getElectionByCode = (accessCode) => {
+    return API.get(GET_ELECTION_BY_CODE_URL(accessCode))
 }
 
 export const recordVote = (electionId, data) => {
-    return API.post(RECORD_VOTE(electionId), data)
+    return API.post(RECORD_VOTE_URL(electionId), data)
+}
+
+export const getVotingHistory = () => {
+    return API.get(VOTING_HISTORY_URL)
 }
