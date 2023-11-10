@@ -11,7 +11,7 @@ class ElectionProxySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Election
-        fields = ["id", "title", "description", "from_date", "to_date", "status"]
+        fields = ["id", "title", "from_date", "to_date", "status"]
 
 
 class VoteOptionSerializer(serializers.ModelSerializer):
