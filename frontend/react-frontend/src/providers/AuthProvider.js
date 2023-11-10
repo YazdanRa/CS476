@@ -1,13 +1,11 @@
 import React, {useRef, useEffect, useState} from 'react'
 import {shallowEqual, useSelector, connect, useDispatch} from 'react-redux'
 import {actions as authActions} from '../store/authRedux/actions'
-import {SplashScreen} from '../components'
 import {GetUser, Logout} from '../services/auth'
 
 function AuthProvider(props) {
     const didRequest = useRef(false)
     const dispatch = useDispatch()
-    const [showSplashScreen, setShowSplashScreen] = useState(false)
     const {token, isAuthorized, user} = useSelector(
         ({auth}) => ({
             token: auth.token,
@@ -30,7 +28,6 @@ function AuthProvider(props) {
                     dispatch(props.logout())
                 )
             } finally {
-                setShowSplashScreen(false)
             }
 
             return () => (didRequest.current = true)
@@ -38,11 +35,10 @@ function AuthProvider(props) {
 
         if (!token) {
             dispatch(props.logout())
-            setShowSplashScreen(false)
         }
     }, [token])
 
-    return showSplashScreen ? <SplashScreen/> : <>{props.children}</>
+    return <>{props.children}</>
 }
 
-export default connect(null, authActions)(AuthProvider)
+export default connect(null, authActions)(AuthProvider);

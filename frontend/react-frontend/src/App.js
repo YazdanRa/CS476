@@ -7,8 +7,6 @@ import Routes from './Routes'
 import AuthProvider from './providers/AuthProvider'
 import {setUpInterceptorStore} from './utils/API'
 
-import {SplashScreen} from './components'
-
 const App = ({store, persistor}) => {
     // set up store for axios interceptors
     setUpInterceptorStore(store)
@@ -17,7 +15,7 @@ const App = ({store, persistor}) => {
         // Redux State Management Provider
         <Provider store={store}>
             {/* Redux Persistor Gate */}
-            <PersistGate persistor={persistor} loading={<SplashScreen/>}>
+            <PersistGate persistor={persistor}>
                 {/* React Router */}
                 <BrowserRouter>
                     {/* Authentication Flow Provider */}
