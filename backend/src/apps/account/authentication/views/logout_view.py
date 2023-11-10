@@ -11,6 +11,7 @@ class LogoutView(APIView):
     Logout user
     """
 
+    http_method_names = ["post"]
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):

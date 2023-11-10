@@ -15,6 +15,8 @@ class RequestOneTimePasswordView(APIView):
     One Time Email Code Login View
     """
 
+    http_method_names = ["post"]
+
     def post(self, request, *args, **kwargs):
         """
         Request One Time Email Code Login View
@@ -60,6 +62,7 @@ class RequestOneTimePasswordView(APIView):
 
 
 class ValidateOneTimePasswordView(APIView):
+    http_method_names = ["post"]
 
     def post(self, request, *args, **kwargs):
         """
