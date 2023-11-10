@@ -3,6 +3,7 @@ import {shallowEqual, useSelector} from 'react-redux'
 import {Routes as Switch, Route} from 'react-router-dom'
 
 import Login from "./pages/Login";
+import OTP from "./pages/OTP";
 import BasePage from "./BasePage";
 
 const Routes = () => {
@@ -17,7 +18,11 @@ const Routes = () => {
                     <Route path="*" element={<BasePage/>}/>
                 </Switch>
             ) : (
-                <Login/>
+                <Switch>
+                    <Route path="/" element={<Login/>}/>
+                    <Route path="/login" element={<Login/>}/>
+                    <Route path="/otp" element={<OTP/>}/>
+                </Switch>
             )}
         </>
     )

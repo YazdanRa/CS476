@@ -1,7 +1,7 @@
 import {Input, notification, Typography} from 'antd'
-import React from 'react'
+import React, {useState} from 'react'
 
-import {BasicLogin} from '../../services/auth'
+import {BasicLogin, OTPRequest, OTPVerify} from '../../services/auth'
 
 import {actions as authActions} from '../../store/authRedux/actions'
 import {useFormik} from 'formik'
@@ -10,23 +10,23 @@ import * as Yup from 'yup'
 import {useDispatch} from 'react-redux'
 import {Link, useNavigate} from 'react-router-dom'
 
-import './Login.css'
+import '../Login/Login.css'
 
 const initialValues = {
     email: undefined,
-    password: undefined,
+    code: undefined,
 }
 
 const FormSchema = Yup.object({
     email: Yup.string()
         .email('Please enter a valid email')
         .required('This field is required'),
-    password: Yup.string()
-        .min(8, 'Password must be at least 8 characters')
-        .required('This field is required'),
+    code: Yup.string()
+        .length(6, 'Code must be exactly 6 characters')
 })
 
-const LoginForm = () => {
+const OTPForm = () => {
+    const [sentCode, setSentCode] = useState(false);
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -34,12 +34,28 @@ const LoginForm = () => {
         initialValues,
         validationSchema: FormSchema,
         onSubmit: (values) => {
-            _loginUser({...values})
+            if (!sentCode) {
+                _otpRequest({...values})
+            } else {
+                _otpVerify({...values})
+            }
         },
     })
 
-    const _loginUser = (values) => {
-        BasicLogin(values)
+    const _otpRequest = (values) => {
+        OTPRequest(values)
+            .then((result) => {
+                const {message} = result;
+                setSentCode(true);
+                notification.success({message: message});
+            })
+            .catch((err) => {
+                notification.error({message: 'Something went wrong!'});
+            })
+    }
+
+    const _otpVerify = (values) => {
+        OTPVerify(values)
             .then((result) => {
                 const {message, token, user} = result
                 dispatch(authActions.login(token, user))
@@ -47,7 +63,7 @@ const LoginForm = () => {
                 navigate("/dashboard")
             })
             .catch((err) => {
-                notification.error({message: 'Email or password is wrong'})
+                notification.error({message: 'Something went wrong!'});
             })
     }
 
@@ -68,15 +84,17 @@ const LoginForm = () => {
                 </Typography.Text>
             )}
 
-            <Input.Password
-                value={formik.values.password}
-                onChange={(e) => formik.setFieldValue('password', e.target.value)}
-                onBlur={() => formik.setFieldTouched('password', true)}
-                placeholder="Password"
-                className="input-field"/>
-            {formik.errors.password && formik.touched.password && (
+            {sentCode && (
+                <Input
+                    value={formik.values.code}
+                    onChange={(e) => formik.setFieldValue('code', e.target.value)}
+                    onBlur={() => formik.setFieldTouched('code', true)}
+                    placeholder="code"
+                    className="input-field"/>
+            )}
+            {formik.errors.code && formik.touched.code && (
                 <Typography.Text type="danger">
-                    {formik.errors.password}
+                    {formik.errors.code}
                 </Typography.Text>
             )}
 
@@ -84,21 +102,16 @@ const LoginForm = () => {
             <button
                 onClick={() => formik.submitForm()}
                 className="login-button"
-            >Login
+            >
+                {!sentCode ? 'Send Code' : 'Verify Code'}
             </button>
 
-            <a href="/resetPassword" className="forgot-password">Forgot your password?</a>
-
-            <Link to="/otp">
-                <button className="signup-button">Login with One Time Password (OTP)</button>
-            </Link>
-
-            <Link to="/signup">
-                <button className="signup-button_home">Sign Up</button>
+            <Link to="/login">
+                <button className="signup-button_home">Login With Password</button>
             </Link>
 
         </div>
     )
 }
 
-export default LoginForm;
+export default OTPForm;
