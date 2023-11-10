@@ -1,35 +1,34 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './components/Home';
-import Dashboard from './components/Dashboard';
-import Signup from './components/Signup';
-import Reset from './components/Reset';
-import Profile from './components/Profile';
-import VoteHistory from './components/VoteHistory';
-import SurveyHistory from './components/SurveyHistory';
-import Create from './components/Create';
-import Vote from './components/Vote';
-import Settings from './components/Settings';
-import Report from './components/Report';
+import React from 'react'
+import {Provider} from 'react-redux'
+import {BrowserRouter} from 'react-router-dom'
+import {PersistGate} from 'redux-persist/integration/react'
+import Routes from './Routes'
 
-function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/reset" element={<Reset />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/vhistory" element={<VoteHistory />} />
-        <Route path="/shistory" element={<SurveyHistory />} />
-        <Route path="/create" element={<Create />} />
-        <Route path="/vote" element={<Vote />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/report" element={<Report />} />
-      </Routes>
-    </Router>
-  );
+import AuthProvider from './providers/AuthProvider'
+import {setUpInterceptorStore} from './utils/API'
+
+import {SplashScreen} from './components'
+
+const App = ({store, persistor}) => {
+    // set up store for axios interceptors
+    setUpInterceptorStore(store)
+
+    return (
+        // Redux State Management Provider
+        <Provider store={store}>
+            {/* Redux Persistor Gate */}
+            <PersistGate persistor={persistor} loading={<SplashScreen/>}>
+                {/* React Router */}
+                <BrowserRouter>
+                    {/* Authentication Flow Provider */}
+                    <AuthProvider>
+                        {/* Skeleton Loading Theme Provider */}
+                        <Routes/>
+                    </AuthProvider>
+                </BrowserRouter>
+            </PersistGate>
+        </Provider>
+    )
 }
 
 export default App;
