@@ -1,0 +1,16 @@
+.plash {
+    width: 100%;
+    height: 100%;
+    margin-right: -100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    animation: splash 0.9s 1 normal forwards;
+}
+
+@keyframes splash {
+    to {
+        margin-right: 0;
+    }
+}
