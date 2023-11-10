@@ -14,6 +14,14 @@ class ElectionProxySerializer(serializers.ModelSerializer):
         fields = ["id", "title", "from_date", "to_date", "status"]
 
 
+class ElectionProxyWithAccessCodeSerializer(ElectionProxySerializer):
+    access_code = serializers.ReadOnlyField()
+
+    class Meta:
+        model = Election
+        fields = ["id", "title", "from_date", "to_date", "status", "access_code"]
+
+
 class VoteOptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = VoteOption

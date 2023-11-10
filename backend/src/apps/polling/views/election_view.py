@@ -1,11 +1,11 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 
 from apps.polling.models import Election
-from apps.polling.serializers import ElectionSerializer, ElectionProxySerializer
+from apps.polling.serializers import ElectionSerializer, ElectionProxyWithAccessCodeSerializer
 
 
 class MyElectionsListView(ListAPIView):
-    serializer_class = ElectionProxySerializer
+    serializer_class = ElectionProxyWithAccessCodeSerializer
     search_fields = []
 
     def get_queryset(self):
