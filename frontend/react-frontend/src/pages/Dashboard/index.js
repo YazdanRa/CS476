@@ -1,26 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './Dashboard.css';
+import Menu from "../../components/Menu";
+import {useLocation} from "react-router-dom";
 
 function Dashboard() {
-    const [showMenu, setShowMenu] = useState(false);
-
-    const toggleMenu = () => {
-        setShowMenu(!showMenu);
-    }
+    const location = useLocation();
 
     return (
         <div className="dashboard">
-            <div className="dropdown">
-                <button onClick={toggleMenu} className="menu-button">Menu</button>
-                {showMenu && (
-                    <div className="menu-list">
-                        <a href="/profile">Profile Setting</a>
-                        <a href="#option2">Voting History</a>
-                        <a href="#option3">Survey History</a>
-                        <a href="/logout">Logout</a>
-                    </div>
-                )}
-            </div>
+
+            <Menu current_path={location.pathname}/>
 
             <div className="container">
                 <div className="vote-container">

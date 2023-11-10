@@ -43,7 +43,6 @@ const LoginForm = () => {
             .then((result) => {
                 const {message, token, user} = result
                 dispatch(authActions.login(token, user))
-                dispatch(authActions.updateUser(user))
                 notification.success({message: message})
                 navigate("/dashboard")
             })
