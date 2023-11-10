@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path("my", views.MyElectionsListView.as_view(), name="my-elections-list"),
     path("create", views.CreateElectionView.as_view(), name="create-election"),
+    path("votingHistory", views.VotingHistoryView.as_view(), name="vote-history"),
     path(
         "byAccessCode/<str:access_code>/",
         include(
@@ -23,5 +24,4 @@ urlpatterns = [
             ]
         )
     ),
-    path("voteHistory", views.VoteHistoryView.as_view(), name="vote-history"),
 ]

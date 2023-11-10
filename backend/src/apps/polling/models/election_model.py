@@ -109,12 +109,14 @@ class Election(models.Model):
 
     @property
     def options_top_to_bottom(self):
-        return self.options.order_by("-votes__count")
+        return self.options.all().annotate(count=models.Count("votes")).order_by("-count")
 
     @property
-    def winner(self) -> List["VoteOption"]:
-        # TODO: Return if there are many winners
-        return list(self.options_top_to_bottom.first())
+    def winners(self) -> Optional[List["VoteOption"]]:
+        if not self.is_closed:
+            return None
+        highest_vote_count = self.options_top_to_bottom.first().votes_count
+        return list(option for option in self.options_top_to_bottom if option.votes_count == highest_vote_count)
 
     @property
     def statistics(self) -> Dict["VoteOption", Dict[str, Any]]:
