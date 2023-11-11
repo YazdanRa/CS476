@@ -35,7 +35,7 @@ function MyElections() {
             {electionList.length === 0 && (
                 <div>
                     <p className="entry-info">Sorry, you have not created any election yet!</p>
-                    <Link to="/elections/create">
+                    <Link to="/elections/createElection">
                         <button className="create-election">Create Election</button>
                     </Link>
                 </div>
