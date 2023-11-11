@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import './SHistory.css';
-import Menu from "../../components/Menu";
 import {Link, useLocation} from "react-router-dom";
-import {getMyElections} from "../../services/election";
 import {notification} from "antd";
+
+import {getMyElections} from "../../../../services/election";
+import Menu from "../../../../components/Menu";
+
+import './styles.css';
+
 
 function MyElections() {
     const location = useLocation();
@@ -36,7 +39,6 @@ function MyElections() {
                         <button className="create-election">Create Election</button>
                     </Link>
                 </div>
-
             )}
             {electionList.map((entry, index) => (
                 <div className="entry" key={index}>

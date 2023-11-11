@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import './VHistory.css';
 import {useLocation} from "react-router-dom";
-import {getVotingHistory} from "../../services/election";
 import {notification} from "antd";
-import Menu from "../../components/Menu";
+
+import {getVotingHistory} from "../../../../services/election";
+import Menu from "../../../../components/Menu";
+
+import './styles.css';
+
 
 function MyVotingHistory() {
     const location = useLocation();

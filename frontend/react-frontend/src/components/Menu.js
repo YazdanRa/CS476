@@ -10,9 +10,10 @@ function Menu({current_path}) {
     const menuItems = [
         {href: "/dashboard", label: "Dashboard"},
         {href: "/profile", label: "Profile Setting"},
-        {href: "/myVotingHistory", label: "My Voting History"},
-        {href: "/myElections", label: "My Elections"},
-        {href: "/logout", label: "Logout"}
+        {href: "/elections/myVotingHistory", label: "My Voting History"},
+        {href: "/elections/myElections", label: "My Elections"},
+        {href: "/elections/createElection", label: "Create Election"},
+        {href: "/auth/logout", label: "Logout"}
     ];
 
     return (

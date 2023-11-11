@@ -1,16 +1,14 @@
-import {Input, notification, Typography} from 'antd'
 import React, {useState} from 'react'
-
-import {BasicLogin, OTPRequest, OTPVerify} from '../../services/auth'
-
-import {actions as authActions} from '../../store/authRedux/actions'
-import {useFormik} from 'formik'
-
-import * as Yup from 'yup'
 import {useDispatch} from 'react-redux'
 import {Link, useNavigate} from 'react-router-dom'
+import {Input, notification, Typography} from 'antd'
+import {useFormik} from 'formik'
+import * as Yup from 'yup'
 
-import '../Login/Login.css'
+import {OTPRequest, OTPVerify} from '../../../../services/auth'
+import {actions as authActions} from '../../../../store/authRedux/actions'
+
+import './styles.css'
 
 const initialValues = {
     email: undefined,

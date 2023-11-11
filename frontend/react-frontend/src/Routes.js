@@ -2,9 +2,8 @@ import React from 'react'
 import {shallowEqual, useSelector} from 'react-redux'
 import {Routes as Switch, Route} from 'react-router-dom'
 
-import Login from "./pages/Login";
-import OTP from "./pages/OTP";
 import BasePage from "./BasePage";
+import Auth from "./pages/Auth";
 
 const Routes = () => {
     const {isAuthorized} = useSelector(
@@ -18,11 +17,7 @@ const Routes = () => {
                     <Route path="*" element={<BasePage/>}/>
                 </Switch>
             ) : (
-                <Switch>
-                    <Route path="/" element={<Login/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/otp" element={<OTP/>}/>
-                </Switch>
+                <Auth/>
             )}
         </>
     )

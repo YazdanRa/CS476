@@ -1,16 +1,14 @@
-import {Input, notification, Typography} from 'antd'
 import React from 'react'
-
-import {BasicLogin} from '../../services/auth'
-
-import {actions as authActions} from '../../store/authRedux/actions'
-import {useFormik} from 'formik'
-
-import * as Yup from 'yup'
-import {useDispatch} from 'react-redux'
 import {Link, useNavigate} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+import {Input, notification, Typography} from 'antd'
+import {useFormik} from 'formik'
+import * as Yup from 'yup'
 
-import './Login.css'
+import {BasicLogin} from '../../../../services/auth'
+import {actions as authActions} from '../../../../store/authRedux/actions'
+
+import './styles.css'
 
 const initialValues = {
     email: undefined,

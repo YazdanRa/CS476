@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState} from 'react'
+import React, {useRef, useEffect} from 'react'
 import {shallowEqual, useSelector, connect, useDispatch} from 'react-redux'
 import {actions as authActions} from '../store/authRedux/actions'
 import {GetUser, Logout} from '../services/auth'
@@ -27,7 +27,6 @@ function AuthProvider(props) {
                 Logout().then(
                     dispatch(props.logout())
                 )
-            } finally {
             }
 
             return () => (didRequest.current = true)
