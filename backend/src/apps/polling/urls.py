@@ -15,5 +15,5 @@ urlpatterns = [
             ]
         )
     ),
-    path("byAccessCode/<str:access_code>/", views.ElectionDetailByAccessCodeView.as_view(), name="election-detail-access-code"),
+    path("byAccessCode/<str:access_code>", views.ElectionDetailByAccessCodeView.as_view(), name="election-detail-access-code"),
 ]
