@@ -4,10 +4,8 @@ import {useLocation} from "react-router-dom";
 import Menu from "../../../../components/Menu";
 import ElectionForm from "../../../../components/ElectionForm";
 
-import './styles.css';
 
-
-function NewSurvey() {
+function ViewElection() {
     const location = useLocation();
 
     return (
@@ -15,7 +13,7 @@ function NewSurvey() {
 
             <Menu current_path={location.pathname}/>
 
-            <h1>Create Election</h1>
+            <h1>Modify Election</h1>
 
             <ElectionForm/>
 
@@ -23,4 +21,4 @@ function NewSurvey() {
     );
 }
 
-export default NewSurvey;
+export default ViewElection;

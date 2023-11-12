@@ -50,7 +50,7 @@ function MyElections() {
                     <p className="entry-info">Access Code: {entry.access_code}</p>
 
                     <div className="entry-links">
-                        <a href={`/elections/${entry.id}`}>More ></a>
+                        <a href={`myElections/${entry.id}`}>More ></a>
                     </div>
 
                 </div>

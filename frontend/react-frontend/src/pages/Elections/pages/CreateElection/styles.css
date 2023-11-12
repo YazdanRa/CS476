@@ -87,6 +87,18 @@ p {
     width: 5%;
 }
 
+.remove-button {
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 20px;
+    margin: 10px 0;
+    width: 5%;
+}
+
 .candidate-input, .question-input, .title-input {
     width: 50%; /* Set the width to 50% of its parent */
     padding-right: 20px; /* Add some spacing to the right */
