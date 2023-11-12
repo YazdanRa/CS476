@@ -9,6 +9,8 @@ import {getElectionById} from "../../services/election";
 
 import './styles.css';
 
+const { RangePicker } = DatePicker;
+
 const initialValues = {
     id: undefined,
     access_code: undefined,
@@ -122,14 +124,15 @@ const ElectionForm = () => {
                 <Input type="text" placeholder="Title" value={formik.values.title}/>
             </label>
 
-            <label className="candidate-input">
-                From:
-                <DatePicker type="date" value={formik.values.from_date}/>
-            </label>
-
-            <label className="candidate-input">
-                To:
-                <DatePicker type="date" value={formik.values.to_date}/>
+            <label>
+                Election Period:<br/>
+                <RangePicker
+                    value={[formik.values.from_date, formik.values.to_date]}
+                    onChange={(dates) => {
+                        formik.values.from_date = dates[0];
+                        formik.values.to_date = dates[1];
+                    }}
+                />
             </label>
 
             <label>

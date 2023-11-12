@@ -1,17 +1,16 @@
-import React, {useEffect, useState} from 'react';
-
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import {useFormik} from "formik";
-
-import './Profile.css';
-import * as Yup from "yup";
 import {Button, DatePicker, Input, notification, Typography, Upload} from "antd";
 import {UploadOutlined} from '@ant-design/icons'
+import * as Yup from "yup";
 
 import {GetUser} from "../../services/auth";
 import {actions as authActions} from "../../store/authRedux/actions";
 import Menu from "../../components/Menu";
+
+import './Profile.css';
 
 
 const FormSchema = Yup.object({
@@ -43,10 +42,10 @@ const Profile = () => {
 
     const dispatch = useDispatch()
     const location = useLocation()
-    const navigate = useNavigate()
 
     const formik = useFormik({
         initialValues,
+        enableReinitialize: true,
         validationSchema: FormSchema,
         onSubmit: (values) => {
             _updateProfile(values)
@@ -169,12 +168,10 @@ const Profile = () => {
             )}
 
             <DatePicker
-                type="date"
                 className="input"
                 placeholder="Date of Birth"
-                name="date_of_birth"
                 value={formik.values.date_of_birth}
-                onChange={(e) => formik.setFieldValue('date_of_birth', e.target.value)}
+                onChange={(date) => formik.setFieldValue('date_of_birth', date)}
                 onBlur={() => formik.setFieldTouched('date_of_birth', true)}
             />
             {formik.errors.date_of_birth && formik.touched.date_of_birth && (
