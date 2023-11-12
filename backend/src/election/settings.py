@@ -143,9 +143,11 @@ USE_I18N = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = path.join(BASE_DIR, "static")
+STATICFILES_DIRS = [path.join(BASE_DIR, "election/static")]
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = path.join(BASE_DIR, "media")
+PUBLIC_MEDIA_LOCATION = "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
