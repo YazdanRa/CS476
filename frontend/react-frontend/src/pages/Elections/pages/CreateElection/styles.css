@@ -61,7 +61,7 @@ p {
     color: #555;
 }
 
-.create-button {
+.submit-button {
     padding: 10px 15px;
     background-color: #007BFF;
     color: #fff;
@@ -73,6 +73,10 @@ p {
     bottom: 20px;
     left: 20px;
     max-width: 200px;  /* or whatever maximum width you prefer */
+
+    p {
+        color: #fff;
+    }
 }
 
 .add-button {

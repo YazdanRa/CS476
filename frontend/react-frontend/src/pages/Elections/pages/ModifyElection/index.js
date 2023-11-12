@@ -1,5 +1,5 @@
 import React from 'react';
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 import Menu from "../../../../components/Menu";
 import ElectionForm from "../../../../components/ElectionForm";
@@ -7,7 +7,6 @@ import ElectionForm from "../../../../components/ElectionForm";
 
 function ModifyElection() {
     const location = useLocation();
-    const params = useParams();
 
     return (
         <div className="survey-container">
