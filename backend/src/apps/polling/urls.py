@@ -10,10 +10,10 @@ urlpatterns = [
         "byID/<str:pk>/",
         include(
             [
-                path("", views.ElectionDetailView.as_view(), name="election-detail-id"),
+                path("", views.ElectionDetailByIdView.as_view(), name="election-detail-id"),
                 path("recordVote", views.RecordVoteView.as_view(), name="record-vote"),
             ]
         )
     ),
-    path("byAccessCode/<str:access_code>/", views.ElectionDetailView.as_view(), name="election-detail-access-code"),
+    path("byAccessCode/<str:access_code>/", views.ElectionDetailByAccessCodeView.as_view(), name="election-detail-access-code"),
 ]
