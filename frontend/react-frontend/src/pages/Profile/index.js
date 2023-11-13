@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useLocation} from "react-router-dom";
 import {useFormik} from "formik";
 import {Button, DatePicker, Input, notification, Typography, Upload} from "antd";
@@ -29,16 +29,15 @@ const FormSchema = Yup.object({
     email: Yup.string()
         .email("Please enter a valid email")
         .required("This field is required"),
-    password: Yup.string().notRequired()
-        .min(8, "Password must be at least 8 characters")
-        .notRequired(),
+    password: Yup.string()
+        .min(8, "Password must be at least 8 characters"),
     confirmation_password: Yup.string()
-        .notRequired()
         .equals([Yup.ref("password"), null], "Passwords must match"),
-    date_of_birth: Yup.date().nullable().notRequired().optional()
+    date_of_birth: Yup.date(),
 })
 
 const Profile = () => {
+    const token = useSelector(({auth}) => auth.token)
     const dispatch = useDispatch()
     const location = useLocation()
 
@@ -55,7 +54,7 @@ const Profile = () => {
         const serializedValues = {
             full_name: values.full_name,
             email: values.email,
-            date_of_birth: values.date_of_birth ? values.date_of_birth.format("YYYY-MM-DD") : undefined
+            date_of_birth: values.date_of_birth,
         }
         UpdateUser(serializedValues)
             .then((result) => {
@@ -95,30 +94,34 @@ const Profile = () => {
 
             <h1>User Profile</h1>
             <div className="image-upload">
+
                 <label htmlFor="profile_picture">
                     <img src={formik.values.profile_picture}
                          alt={formik.values.full_name}
                          className="placeholder-image">
                     </img>
                 </label>
+
                 <Upload
-                    onChange={(e) => {
-                        formik.setFieldValue(
-                            "profile_picture",
-                            Array.from(e.fileList).map((item) => ({
-                                ...item,
-                                status: "done",
-                            })),
-                        )
-                    }}
-                    // fileList={formik.values.profile_picture}
                     multiple={false}
                     listType="picture"
+                    name="profile_picture"
+                    className="upload-list-inline"
+                    headers={{Authorization: token}}
+                    action="https://api.cs476.yazdanra.com/user/uploadProfilePicture"
+                    showUploadList={false}
+                    accept={"image/*"}
                 >
                     <Button style={{marginTop: 8}} icon={<UploadOutlined/>}>
-                        Update Profile Picture
+                        Upload
                     </Button>
                 </Upload>
+                {formik.errors.profile_picture && formik.touched.profile_picture && (
+                    <Typography.Text type="danger">
+                        {formik.errors.profile_picture}
+                    </Typography.Text>
+                )}
+
 
             </div>
 
