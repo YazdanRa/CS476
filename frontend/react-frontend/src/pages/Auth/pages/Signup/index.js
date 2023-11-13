@@ -6,6 +6,9 @@ import {Input, notification, Typography} from 'antd'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 
+import {RegisterUser} from '../../../../services/auth'
+import {actions as authActions} from '../../../../store/authRedux/actions'
+
 const initialValues = {
   fullname: undefined,
   username: undefined,
@@ -182,6 +185,11 @@ const SignupForm = () => {
                 className="signup-button"
             >Signup
         </button>
+
+        <Link to="/login">
+            <button className="login-button_home">Already have an Account</button>
+        </Link>
+
     </div>
   );
 
