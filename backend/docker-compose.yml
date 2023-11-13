@@ -34,7 +34,17 @@ services:
         --reload
         --timeout 120
 
-
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - grafana_share:/usr/share/grafana
+    environment:
+      GF_SERVER_ROOT_URL: "grafana.cs476.yazdanra.com"
 
 volumes:
   dbdata:
+  grafana_data:
+  grafana_share:
