@@ -6,7 +6,7 @@ import {Input, notification, Typography} from 'antd'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 
-import {RegisterUser} from '../../../../services/auth'
+import {BasicSignup} from '../../../../services/auth'
 import {actions as authActions} from '../../../../store/authRedux/actions'
 
 const initialValues = {
