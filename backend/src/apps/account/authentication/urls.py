@@ -16,7 +16,7 @@ urlpatterns = [
     ])),
 
     path("resetPassword/", include([
-        path("request", views.ResetPasswordView.as_view(), name="reset-password-request"),
-        path("verify", views.ResetPasswordView.as_view(), name="reset-password-verify"),
+        path("request", views.ResetPasswordRequestView.as_view(), name="reset-password-request"),
+        path("verify", views.ResetPasswordVerifyView.as_view(), name="reset-password-verify"),
     ])),
 ]
