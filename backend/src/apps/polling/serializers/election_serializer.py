@@ -55,6 +55,10 @@ class ElectionSerializer(serializers.ModelSerializer):
         return obj.to_date < now() and self.context.get("request").user == obj.creator
 
 
+class ElectionResultsSerializer(ElectionSerializer):
+    vote_options = VoteOptionWithResultSerializer(read_only=True, many=True)
+
+
 class VotingHistorySerializer(ElectionSerializer):
     my_vote = serializers.SerializerMethodField(read_only=True)
     winners = VoteOptionWithResultSerializer(read_only=True, many=True)

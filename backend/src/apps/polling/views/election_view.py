@@ -20,6 +20,12 @@ class ElectionDetailByIdView(RetrieveAPIView):
     lookup_field = "pk"
 
 
+class ElectionResultsView(RetrieveAPIView):
+    serializer_class = ElectionSerializer
+    queryset = Election.objects.all()
+    lookup_field = "pk"
+
+
 class ElectionDetailByAccessCodeView(RetrieveAPIView):
     serializer_class = ElectionSerializer
     queryset = Election.objects.all()
