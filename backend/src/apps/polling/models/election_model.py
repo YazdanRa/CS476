@@ -1,4 +1,6 @@
 from datetime import timedelta
+from random import choice
+from string import digits, ascii_uppercase
 from typing import TYPE_CHECKING, Dict, Any, List, Optional
 
 from django.contrib.auth.models import Group
@@ -9,6 +11,11 @@ from django.utils.translation import gettext as _
 if TYPE_CHECKING:
     from apps.account.user.models import User
     from apps.polling.models import VoteOption
+
+
+def election_code_generator():
+    """ Generate a random 8 char alphanumeric code for election """
+    return "".join(choice(ascii_uppercase + digits) for _ in range(8))
 
 
 class Election(models.Model):
@@ -27,6 +34,14 @@ class Election(models.Model):
     show_results_after_election = models.BooleanField(
         verbose_name=_("Show results after election"),
         default=False
+    )
+    access_code = models.CharField(
+        verbose_name=_("Access Code"),
+        max_length=8,
+        default=election_code_generator,
+        editable=False,
+        null=False,
+        blank=False,
     )
 
     creator = models.ForeignKey(
@@ -94,12 +109,14 @@ class Election(models.Model):
 
     @property
     def options_top_to_bottom(self):
-        return self.options.order_by("-votes__count")
+        return self.options.all().annotate(count=models.Count("votes")).order_by("-count")
 
     @property
-    def winner(self) -> List["VoteOption"]:
-        # TODO: Return if there are many winners
-        return list(self.options_top_to_bottom.first())
+    def winners(self) -> Optional[List["VoteOption"]]:
+        if not self.is_closed:
+            return None
+        highest_vote_count = self.options_top_to_bottom.first().votes_count
+        return list(option for option in self.options_top_to_bottom if option.votes_count == highest_vote_count)
 
     @property
     def statistics(self) -> Dict["VoteOption", Dict[str, Any]]:

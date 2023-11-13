@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react'
-import {shallowEqual, useDispatch, useSelector} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
-import {Logout as LogoutService} from '../../services/auth'
-
-import * as authActions from '../../store/authRedux/actions'
+import {shallowEqual, useDispatch, useSelector} from 'react-redux'
 import {notification} from "antd";
+
+import {Logout as LogoutService} from '../../../../services/auth'
+import * as authActions from '../../../../store/authRedux/actions'
+
 
 const Logout = () => {
     const dispatch = useDispatch()

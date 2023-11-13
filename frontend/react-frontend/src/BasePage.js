@@ -1,8 +1,10 @@
 import React from "react";
 import {Routes as Switch, Route, Navigate} from "react-router-dom";
 
-import Logout from "./pages/Logout";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import Elections from "./pages/Elections";
+import Auth from "./pages/Auth";
 
 const BasePage = () => {
 
@@ -10,7 +12,10 @@ const BasePage = () => {
         <Switch>
             <Route path="/" element={<Navigate to={"/dashboard"} replace/>}/>
             <Route path="/dashboard" element={<Dashboard/>}/>
-            <Route path="/logout" element={<Logout/>}/>
+            <Route path="/profile" element={<Profile/>}/>
+
+            <Route path="/elections/*" element={<Elections/>}/>
+            <Route path="/auth/*" element={<Auth/>}/>
         </Switch>
     );
 };

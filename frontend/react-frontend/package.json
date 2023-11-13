@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@manaflair/redux-batch": "^1.0.0",
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.17.0",
@@ -10,6 +11,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.11.0",
     "axios": "^1.6.0",
+    "dayjs": "^1.11.10",
     "formik": "^2.4.5",
     "normalizr": "^3.6.2",
     "prop-types": "^15.8.1",

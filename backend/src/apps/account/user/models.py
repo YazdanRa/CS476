@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -63,7 +64,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         super().clean()
         self.email = self.__class__.objects.normalize_email(self.email)
 
-    def send_email(self, subject, message, from_email="URElection <noreply@yazdanra.com>", **kwargs):
+    def send_email(self, subject, message, from_email=settings.DEFAULT_FROM_EMAIL, **kwargs):
         from django.core.mail import send_mail
 
         send_mail(subject, message, from_email, [self.email], **kwargs)

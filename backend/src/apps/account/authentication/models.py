@@ -63,7 +63,7 @@ class OneTimePassword(models.Model):
 
         send_mail(
             subject="Election Authentication Code",
-            message=f"Please use the following code to login to the UR Election website: {self.code}",
+            message=f"Please use the following code to login to the Election website: {self.code}",
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[self.email],
             **kwargs)

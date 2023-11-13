@@ -4,6 +4,18 @@ from apps.account.authentication.models import OneTimePassword
 from apps.account.user.models import User
 
 
+class OTPRequestSerializer(serializers.Serializer):
+    class Meta:
+        fields = ["email"]
+
+    email = serializers.EmailField(
+        help_text="The email address used to authenticate the user.",
+        required=True,
+        allow_null=False,
+        allow_blank=False,
+    )
+
+
 class OneTimePasswordSerializer(serializers.ModelSerializer):
     class Meta:
         model = OneTimePassword

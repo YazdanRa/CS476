@@ -63,6 +63,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django_prometheus.middleware.PrometheusAfterMiddleware"
 ]
 
@@ -141,6 +142,8 @@ USE_I18N = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 STATIC_URL = "/static/"
 STATIC_ROOT = path.join(BASE_DIR, "static")
 
@@ -192,9 +195,11 @@ CSRF_TRUSTED_ORIGINS = ["https://api.cs476.yazdanra.com", "https://127.0.0.1", "
 
 # Email
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = getenv("EMAIL_HOST", "smtp-relay.gmail.com")
+EMAIL_HOST = getenv("EMAIL_HOST", "smtp.mail.me.com")
 EMAIL_USE_TLS = True  # Set to False if your email server doesn't use TLS
 EMAIL_PORT = 587 if EMAIL_USE_TLS else 465
 EMAIL_HOST_USER = getenv("EMAIL_HOST_USER", "noreply@yazdanra.com")
 EMAIL_HOST_PASSWORD = getenv("EMAIL_HOST_PASSWORD", "insecure-password")
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = getenv("DEFAULT_FROM_EMAIL", "Yazdan CS476 Project <hi@yazdanra.com>")
+AUTH_EMAIL_LIMIT_DAY = timedelta(days=1)
+AUTH_EMAIL_LIMIT_COUNT = 10

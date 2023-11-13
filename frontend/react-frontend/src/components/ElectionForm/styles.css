@@ -31,13 +31,3 @@ input[type="text"], input[type="date"] {
     border-radius: 5px;
     border: 1px solid #ccc;
 }
-
-.radio-options {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.radio-options label {
-    margin-right: 15px;
-}

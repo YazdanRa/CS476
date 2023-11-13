@@ -2,13 +2,14 @@ export const actionTypes = {
     Login: '[Login] Action',
     Register: '[Register] Action',
     Logout: '[Logout] Action',
+    getUser: '[Get User] Action',
     UpdateUser: '[Update User] Action',
 }
 
 export const actions = {
-    login: (token) => ({
+    login: (token, user) => ({
         type: actionTypes.Login,
-        payload: {token},
+        payload: {token, user},
     }),
     register: (token) => ({
         type: actionTypes.Register,
@@ -16,6 +17,10 @@ export const actions = {
     }),
     logout: () => ({
         type: actionTypes.Logout
+    }),
+    getUser: (user) => ({
+        type: actionTypes.getUser,
+        payload: {user},
     }),
     updateUser: (user) => ({
         type: actionTypes.UpdateUser,
