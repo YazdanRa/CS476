@@ -59,7 +59,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
-    # "django.middleware.csrf.CsrfViewMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -183,20 +183,30 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ],
+    "DATETIME_FORMAT": "%m/%d/%Y %H:%M",
+    "DATE_INPUT_FORMATS": ["%Y/%m/%d"],
     "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend",
         "rest_framework.filters.OrderingFilter",
-    ]
+    ],
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle"
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "500000/day",
+        "user": "100000/day"
+    }
 }
 
 CORS_ALLOW_ALL_ORIGINS = True
 
-CSRF_TRUSTED_ORIGINS = ["https://api.cs476.yazdanra.com", "https://127.0.0.1", "https://localhost"]
+CSRF_TRUSTED_ORIGINS = ["https://api.cs476.yazdanra.com", "https://127.0.0.1", "https://localhost", "https://cs476.yazdanra.com"]
 
 # Email
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = getenv("EMAIL_HOST", "smtp.mail.me.com")
-EMAIL_USE_TLS = True  # Set to False if your email server doesn"t use TLS
+EMAIL_USE_TLS = True  # Set to False if your email server doesn't use TLS
 EMAIL_PORT = 587 if EMAIL_USE_TLS else 465
 EMAIL_HOST_USER = getenv("EMAIL_HOST_USER", "noreply@yazdanra.com")
 EMAIL_HOST_PASSWORD = getenv("EMAIL_HOST_PASSWORD", "insecure-password")
