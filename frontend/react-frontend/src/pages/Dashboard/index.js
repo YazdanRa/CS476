@@ -1,12 +1,11 @@
 import React, {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {Button, Input, notification, Space} from "antd";
+import {Button, Input, Space} from "antd";
 
 import Menu from "../../components/Menu";
 
 import "./styles.css";
 import {useFormik} from "formik";
-import {getElectionByAccessCode} from "../../services/election";
 
 
 function Dashboard() {
@@ -21,22 +20,9 @@ function Dashboard() {
         },
         enableReinitialize: true,
         onSubmit: values => {
-            _accessElection(values.access_code);
+            navigate(`/elections/${values.access_code}`);
         },
     });
-
-    const _accessElection = (access_code) => {
-        getElectionByAccessCode(access_code)
-            .then((result) => {
-                // TODO: navigate to the voting page of the election!
-                navigate(`/elections/${result.id}`);
-            })
-            .catch((error) => {
-                if (error.response.status === 425) {
-                    notification.error({message: error.response.data.message});
-                }
-            });
-    }
 
     return (
         <div className="dashboard">

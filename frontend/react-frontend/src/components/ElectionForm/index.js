@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {Button, DatePicker, Input, notification, Switch, Typography} from "antd"
 import {useFormik} from "formik"
 import * as Yup from "yup"
@@ -42,6 +42,7 @@ const FormSchema = Yup.object({
 const ElectionForm = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const params = useParams();
 
     const formik = useFormik({
         initialValues,
@@ -97,7 +98,7 @@ const ElectionForm = () => {
     }
 
     const _getElection = () => {
-        const electionId = location.pathname.split("/").pop();
+        const electionId = params.id;
         getElectionById(electionId)
             .then((result) => {
                 const serialized_data = {

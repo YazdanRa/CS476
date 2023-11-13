@@ -1,45 +1,90 @@
-import React, {useState} from "react";
-import "./Vote.css";
+import React, {useEffect, useState} from "react";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+
+
+import {notification, Radio, Space} from "antd";
+
+import {getElectionByAccessCode, recordVote} from "../../../../services/election";
+
+import "./styles.css";
+import Menu from "../../../../components/Menu";
+
+
+const initialValues = {
+    id: undefined,
+    title: undefined,
+    from_date: undefined,
+    to_date: undefined,
+    creator: undefined,
+    vote_options: [],
+}
 
 function SurveyPage() {
-    const [showMenu, setShowMenu] = useState(false);
+    const location = useLocation();
+    const navigate = useNavigate();
+    const params = useParams();
+    const access_code = params.access_code;
 
-    const toggleMenu = () => {
-        setShowMenu(!showMenu);
+    const [election, setElection] = useState(initialValues);
+    const [selected_option, setSelectedOption] = useState(undefined);
+
+    const _accessElection = () => {
+        getElectionByAccessCode(access_code)
+            .then((result) => {
+                setElection(result);
+            })
+            .catch((error) => {
+                notification.error({message: error.response.data.message});
+                navigate("/dashboard");
+            });
     }
 
+    const _recordVote = () => {
+        console.log(selected_option);
+        const serialized_data = {
+            selected_options: [selected_option],
+        }
+        recordVote(election.id, serialized_data)
+            .then((result) => {
+                notification.success({message: "Vote recorded successfully"});
+                navigate("/dashboard");
+            })
+            .catch((error) => {
+                notification.error({message: error.response.data.message});
+            });
+    }
+
+    useEffect(() => {
+        _accessElection();
+    }, []);
+
     return (
-        <div className="create-container">
-            <div className="dropdown">
-                <button onClick={toggleMenu} className="menu-button">Menu</button>
-                {showMenu && (
-                    <div className="menu-list">
-                        <a href="#option1">Profile Setting</a>
-                        <a href="#option2">Voting History</a>
-                        <a href="#option3">Survey History</a>
-                        <a href="#option4">Support</a>
-                        <a href="#option5">Logout</a>
-                    </div>
-                )}
-            </div>
+        <div className="survey-container">
+
+            <Menu current_path={location.pathname}/>
 
             <h1>Survey Name</h1>
-            <p>1950-01-01 to 1950-01-03 by Ministry of Magic</p>
 
-            {Array(4).fill().map((_, index) => (
-                <div key={index} className="question-block">
-                    <p className="question-block">...?</p>
-                    {["Candidate 1", "Candidate 2", "Candidate 3", "Candidate 4"].map((candidate, cIndex) => (
-                        <div key={cIndex}>
-                            <input type="radio" id={`q${index}-c${cIndex}`} name={`question${index}`}
-                                   value={candidate}/>
-                            <label htmlFor={`q${index}-c${cIndex}`}>{candidate}</label>
-                        </div>
+            <p>{election.from_date} to {election.to_date} by {election.creator}</p>
+
+            <p className="question-block">{election.title}</p>
+            <Radio.Group
+                value={selected_option}
+                onChange={(event) => setSelectedOption(event.target.value)}
+            >
+                <Space direction="vertical">
+                    {election.vote_options.map((vote_option, index) => (
+                        <>
+                            <Radio
+                                value={vote_option.id}
+                                checked={selected_option === vote_option.id}
+                            >{vote_option.title}</Radio>
+                        </>
                     ))}
-                </div>
-            ))}
+                </Space>
+            </Radio.Group>
 
-            <button className="submit-button">Submit Answers</button>
+            <button className="submit-button" onClick={_recordVote}>Submit</button>
         </div>
     );
 }
