@@ -1,12 +1,14 @@
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
-from rest_framework.status import HTTP_425_TOO_EARLY, HTTP_410_GONE, HTTP_412_PRECONDITION_FAILED
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.status import HTTP_425_TOO_EARLY, HTTP_410_GONE, HTTP_412_PRECONDITION_FAILED, HTTP_403_FORBIDDEN
 
 from apps.polling.models import Election
 from apps.polling.serializers import ElectionSerializer, ElectionProxyWithAccessCodeSerializer
 
 
 class MyElectionsListView(ListAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = ElectionProxyWithAccessCodeSerializer
     search_fields = []
 
@@ -15,18 +17,31 @@ class MyElectionsListView(ListAPIView):
 
 
 class ElectionDetailByIdView(RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = ElectionSerializer
     queryset = Election.objects.all()
     lookup_field = "pk"
 
 
 class ElectionResultsView(RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = ElectionSerializer
     queryset = Election.objects.all()
     lookup_field = "pk"
 
+    def get(self, request, **kwargs):
+        election = self.get_obj()
+        user = request.user
+        if election.creator != user and election.show_results_after_election == False:
+            return Response(
+                data=dict(message="You're not allowed to see the results at this time."),
+                status=HTTP_403_FORBIDDEN
+            )
+        return super().get(request, kwargs)
+
 
 class ElectionDetailByAccessCodeView(RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = ElectionSerializer
     queryset = Election.objects.all()
     lookup_field = "access_code"
