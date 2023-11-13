@@ -184,7 +184,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
     ],
     "DATETIME_FORMAT": "%m/%d/%Y %H:%M",
-    "DATE_INPUT_FORMATS": ["%Y/%m/%d"],
+    "DATE_INPUT_FORMATS": ["%Y/%m/%d %H:%M"],
     "DEFAULT_FILTER_BACKENDS": [
         "django_filters.rest_framework.DjangoFilterBackend",
         "rest_framework.filters.OrderingFilter",

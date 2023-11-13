@@ -105,8 +105,8 @@ const ElectionForm = () => {
                     id: result.id,
                     access_code: result.access_code,
                     title: result.title,
-                    from_date: dayjs(result.from_date),
-                    to_date: dayjs(result.to_date),
+                    from_date: dayjs(result.from_date).format("YYYY/MM/DD HH:mm"),
+                    to_date: dayjs(result.to_date).format("YYYY/MM/DD HH:mm"),
                     show_results_after_election: result.show_results_after_election,
                     vote_options: result.vote_options.map(option => option.title),
                 }

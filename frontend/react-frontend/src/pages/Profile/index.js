@@ -54,7 +54,7 @@ const Profile = () => {
         const serializedValues = {
             full_name: values.full_name,
             email: values.email,
-            date_of_birth: dayjs(values.date_of_birth).format("YYYY/MM/DD"),
+            date_of_birth: dayjs(values.date_of_birth).format("YYYY/MM/DD HH:mm"),
         }
         UpdateUser(serializedValues)
             .then((result) => {
