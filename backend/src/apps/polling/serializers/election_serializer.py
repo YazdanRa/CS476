@@ -11,13 +11,27 @@ class ElectionProxySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Election
-        fields = ["id", "title", "description", "from_date", "to_date", "status"]
+        fields = ["id", "title", "from_date", "to_date", "status"]
+
+
+class ElectionProxyWithAccessCodeSerializer(ElectionProxySerializer):
+    access_code = serializers.ReadOnlyField()
+
+    class Meta:
+        model = Election
+        fields = ["id", "title", "from_date", "to_date", "status", "access_code"]
 
 
 class VoteOptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = VoteOption
         fields = ["id", "title", "description"]
+
+
+class VoteOptionWithResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VoteOption
+        fields = ["id", "title", "description", "count"]
 
 
 class ElectionSerializer(serializers.ModelSerializer):
@@ -39,3 +53,18 @@ class ElectionSerializer(serializers.ModelSerializer):
 
     def get_can_see_results(self, obj: Election):
         return obj.to_date < now() and self.context.get("request").user == obj.creator
+
+
+class VotingHistorySerializer(ElectionSerializer):
+    my_vote = serializers.SerializerMethodField(read_only=True)
+    winners = VoteOptionWithResultSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Election
+        fields = ["id", "title", "from_date", "to_date", "my_vote", "winners"]
+
+    def get_my_vote(self, obj):
+        return VoteOptionSerializer(
+            instance=[vote.selected_option for vote in obj.votes.filter(voter=self.context.get("request").user)],
+            many=True
+        ).data

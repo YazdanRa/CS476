@@ -12,6 +12,7 @@ class LoginView(APIView):
     """
 
     serializer_class = LoginSerializer
+    http_method_names = ["post"]
 
     def get_serializer(self, *args, **kwargs):
         serializer_class = self.serializer_class

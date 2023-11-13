@@ -23,6 +23,8 @@ class CreateElectionSerializer(serializers.Serializer):
     can_choose_multiple_options = serializers.BooleanField(allow_null=False, default=False)
     show_results_after_election = serializers.BooleanField(allow_null=False, default=False)
 
+    access_code = serializers.CharField(read_only=True)
+
     from_date = serializers.DateTimeField()
     to_date = serializers.DateTimeField()
 

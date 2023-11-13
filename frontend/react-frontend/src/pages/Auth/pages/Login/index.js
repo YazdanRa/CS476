@@ -1,16 +1,14 @@
-import {Input, notification, Typography} from 'antd'
 import React from 'react'
-
-import {BasicLogin} from '../../services/auth'
-
-import {actions as authActions} from '../../store/authRedux/actions'
-import {useFormik} from 'formik'
-
-import * as Yup from 'yup'
-import {useDispatch} from 'react-redux'
 import {Link, useNavigate} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+import {Input, notification, Typography} from 'antd'
+import {useFormik} from 'formik'
+import * as Yup from 'yup'
 
-import './Login.css'
+import {BasicLogin} from '../../../../services/auth'
+import {actions as authActions} from '../../../../store/authRedux/actions'
+
+import './styles.css'
 
 const initialValues = {
     email: undefined,
@@ -43,7 +41,6 @@ const LoginForm = () => {
             .then((result) => {
                 const {message, token, user} = result
                 dispatch(authActions.login(token, user))
-                dispatch(authActions.updateUser(user))
                 notification.success({message: message})
                 navigate("/dashboard")
             })
@@ -88,7 +85,11 @@ const LoginForm = () => {
             >Login
             </button>
 
-            <a href="./Reset" className="forgot-password">Forgot your password?</a>
+            <a href="/resetPassword" className="forgot-password">Forgot your password?</a>
+
+            <Link to="/otp">
+                <button className="signup-button">Login with One Time Password (OTP)</button>
+            </Link>
 
             <Link to="/signup">
                 <button className="signup-button_home">Sign Up</button>

@@ -1,43 +1,74 @@
 import React, {useState} from 'react';
-import './Dashboard.css';
+import {useLocation, useNavigate} from "react-router-dom";
+import {Button, Input, notification, Space} from 'antd';
+
+import Menu from "../../components/Menu";
+
+import './styles.css';
+import {useFormik} from "formik";
+import {getElectionByAccessCode} from "../../services/election";
+
 
 function Dashboard() {
-    const [showMenu, setShowMenu] = useState(false);
+    const location = useLocation();
+    const navigate = useNavigate();
 
-    const toggleMenu = () => {
-        setShowMenu(!showMenu);
+    const [access_code, setAccessCode] = useState('');
+
+    const formik = useFormik({
+        initialValues: {
+            access_code: access_code
+        },
+        enableReinitialize: true,
+        onSubmit: values => {
+            _accessElection(values.access_code);
+        },
+    });
+
+    const _accessElection = (access_code) => {
+        getElectionByAccessCode(access_code)
+            .then((result) => {
+                // TODO: navigate to the voting page of the election!
+                navigate(`/elections/${result.id}`);
+            })
+            .catch((error) => {
+                if (error.response.status === 425) {
+                    notification.error({message: error.response.data.message});
+                }
+            });
     }
 
     return (
         <div className="dashboard">
-            <div className="dropdown">
-                <button onClick={toggleMenu} className="menu-button">Menu</button>
-                {showMenu && (
-                    <div className="menu-list">
-                        <a href="/profile">Profile Setting</a>
-                        <a href="#option2">Voting History</a>
-                        <a href="#option3">Survey History</a>
-                        <a href="/logout">Logout</a>
-                    </div>
-                )}
-            </div>
+
+            <Menu current_path={location.pathname}/>
 
             <div className="container">
+
                 <div className="vote-container">
                     <h2>Vote</h2>
-                    <p>Enter the survey code and vote</p>
-                    <div className="input-container">
-                        <input type="text" placeholder="Survey Code"/>
-                        <button className="forward-button">&rarr;</button>
-                    </div>
+                    <p>Enter the survey access code to vote</p>
+                    <Space.Compact className="input-container" style={{width: '100%'}}>
+                        <Input
+                            placeholder="Survey Code" maxLength={8}
+                            value={formik.values.access_code}
+                            onChange={(e) => setAccessCode(e.target.value.toUpperCase())}
+                        />
+                        <Button type="primary" className="forward-button"
+                                onClick={() => formik.submitForm()}>&rarr;</Button>
+                    </Space.Compact>
                 </div>
 
                 <div className="create-survey-container">
                     <h2>Create a Survey</h2>
                     <p>Create and share a survey</p>
                     <p className="subtext">more detail</p>
-                    <button>Create</button>
+                    <button onClick={() => {
+                        navigate("/elections/createElection");
+                    }}>Create
+                    </button>
                 </div>
+
             </div>
         </div>
     );
