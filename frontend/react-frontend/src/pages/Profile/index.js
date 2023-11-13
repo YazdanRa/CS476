@@ -158,7 +158,7 @@ const Profile = () => {
                 className="input"
                 placeholder="Date of Birth"
                 format="YYYY-MM-DD"
-                value={dayjs(formik.values.date_of_birth)}
+                value={formik.values.date_of_birth ? dayjs(formik.values.date_of_birth) : undefined}
                 status={formik.errors.date_of_birth && formik.touched.date_of_birth ? "error" : undefined}
                 onChange={(date) => formik.setFieldValue("date_of_birth", date)}
                 onBlur={() => formik.setFieldTouched("date_of_birth", true)}
