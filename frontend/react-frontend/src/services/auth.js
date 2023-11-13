@@ -6,6 +6,7 @@ const BASIC_LOGIN_URL = "/auth/token/login"
 const REGISTER_URL = "/auth/token/register"
 const LOGOUT_URL = "/auth/token/logout"
 const GET_ME_URL = "/user/info"
+const UPDATE_ME_URL = "/user/update"
 
 const RESET_PASSWORD_REQUEST_URL = "/auth/resetPassword/request"
 const RESET_PASSWORD_VERIFY_URL = "/auth/resetPassword/verify"
@@ -40,4 +41,8 @@ export const ResetPasswordRequest = (data) => {
 
 export const ResetPasswordVerify = (data) => {
     return API.post(RESET_PASSWORD_VERIFY_URL, data)
+}
+
+export const UpdateUser = (data) => {
+    return API.patch(UPDATE_ME_URL, data)
 }
