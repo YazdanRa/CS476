@@ -13,6 +13,10 @@ urlpatterns = [
         path("register", views.RegisterView.as_view(), name="register"),
         path("login", views.LoginView.as_view(), name="login"),
         path("logout", views.LogoutView.as_view(), name="logout"),
-    ]))
+    ])),
 
+    path("resetPassword/", include([
+        path("request", views.ResetPasswordRequestView.as_view(), name="reset-password-request"),
+        path("verify", views.ResetPasswordVerifyView.as_view(), name="reset-password-verify"),
+    ])),
 ]

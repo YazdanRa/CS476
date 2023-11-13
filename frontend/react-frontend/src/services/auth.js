@@ -7,6 +7,9 @@ const REGISTER_URL = '/auth/token/register'
 const LOGOUT_URL = '/auth/token/logout'
 const GET_ME_URL = '/user/info'
 
+const RESET_PASSWORD_REQUEST_URL = '/auth/password/reset/request'
+const RESET_PASSWORD_VERIFY_URL = '/auth/password/reset/verify'
+
 export const OTPRequest = (data) => {
     return API.post(OTP_REQUEST_URL, data)
 }
@@ -29,4 +32,12 @@ export const Logout = () => {
 
 export const GetUser = () => {
     return API.get(GET_ME_URL)
+}
+
+export const ResetPasswordRequest = (data) => {
+    return API.post(RESET_PASSWORD_REQUEST_URL, data)
+}
+
+export const ResetPasswordVerify = (data) => {
+    return API.post(RESET_PASSWORD_VERIFY_URL, data)
 }

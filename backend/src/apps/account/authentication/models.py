@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
@@ -66,4 +67,50 @@ class OneTimePassword(models.Model):
             message=f"Please use the following code to login to the Election website: {self.code}",
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[self.email],
+            **kwargs)
+
+
+class RestPasswordRequest(models.Model):
+    email = models.EmailField(
+        verbose_name=_("email"),
+        help_text=_("The email who requested the password reset.")
+    )
+
+    auth_code = models.CharField(
+        verbose_name=_("Code"),
+        help_text=_("The code used to authenticate the user."),
+        max_length=6,
+        editable=False,
+        default=random_auth_code_string
+    )
+
+    date_created = models.DateTimeField(verbose_name=_("Date Created"), auto_now_add=True)
+    last_modified = models.DateTimeField(verbose_name=_("Last Modified"), auto_now=True)
+    date_used = models.DateTimeField(verbose_name=_("Date Used"), null=True, default=None)
+
+    class Meta:
+        verbose_name = _("Password Reset")
+        verbose_name_plural = _("Password Resets")
+
+    def __str__(self):
+        return f"{self.email}"
+
+    @property
+    def user(self):
+        return User.objects.get(email__iexact=self.email)
+
+    def is_expired(self):
+        return self.date_created + timezone.timedelta(minutes=10) < timezone.now()
+
+    def is_used(self):
+        return self.date_used is not None
+
+    def send_password_reset_email(self, **kwargs):
+        from django.core.mail import send_mail
+
+        send_mail(
+            subject="Election Password Reset",
+            message=f"Please use the following code to reset your password: {self.auth_code}",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[self.user.email],
             **kwargs)
