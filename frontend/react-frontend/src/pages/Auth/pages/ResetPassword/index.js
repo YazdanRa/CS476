@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {Input, notification, Typography} from "antd";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
@@ -14,10 +14,10 @@ const FormSchema = Yup.object({
         .required('This field is required'),
     auth_code: Yup.string()
         .length(6, 'Code must be exactly 6 characters'),
-    password: Yup.string()
+    new_password: Yup.string()
         .min(8, 'Password must be at least 8 characters'),
-    confirm_password: Yup.string()
-        .equals([Yup.ref('password')], 'Passwords must match')
+    confirm_new_password: Yup.string()
+        .equals([Yup.ref('new_password')], 'Passwords must match')
 })
 
 const initialValues = {
@@ -28,7 +28,6 @@ const initialValues = {
 }
 
 function ResetPassword() {
-    const location = useLocation();
     const navigate = useNavigate();
 
     const [auth_requested, setAuthRequested] = useState(false);
@@ -40,7 +39,6 @@ function ResetPassword() {
         onSubmit: values => {
             if (!auth_requested) {
                 _handleSendCode(values);
-                setAuthRequested(true);
             } else {
                 _handleChangePassword(values);
             }
@@ -54,6 +52,7 @@ function ResetPassword() {
                 (result) => {
                     const {message} = result;
                     notification.success({message: message});
+                    setAuthRequested(true);
                 })
             .catch((err) => {
                 notification.error({message: 'Something went wrong!'});

@@ -71,8 +71,9 @@ class ResetPasswordVerifySerializer(serializers.ModelSerializer):
         email = self.validated_data.get("email")
         auth_code = self.validated_data.get("auth_code")
         reset_password_request = RestPasswordRequest.objects.get(email=email, auth_code=auth_code)
+        reset_password_request.set_used()
 
         new_password = self.validated_data.get("new_password")
-        reset_password_request.user.set_password(new_password)
-        reset_password_request.user.save()
-        reset_password_request.set_used()
+        user = reset_password_request.user
+        user.set_password(new_password)
+        user.save()
