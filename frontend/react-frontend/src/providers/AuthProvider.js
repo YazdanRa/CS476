@@ -25,7 +25,6 @@ function AuthProvider(props) {
                     dispatch(props.updateUser({...user}))
                 }
             } catch (error) {
-                console.log(error)
                 Logout().then(
                     dispatch(props.logout())
                 )

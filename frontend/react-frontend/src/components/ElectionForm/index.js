@@ -74,7 +74,6 @@ const ElectionForm = () => {
                 navigate(`/elections/myElections/${newElectionId}`);
             })
             .catch((err) => {
-                console.log(err);
                 notification.error({message: "Sorry, something went wrong"});
             })
     }
@@ -93,7 +92,6 @@ const ElectionForm = () => {
                 notification.success({message: "Election successfully updated!"});
             })
             .catch((err) => {
-                console.log(err);
                 notification.error({message: "Sorry, something went wrong"});
             })
     }

@@ -63,7 +63,6 @@ function ResetPassword() {
         ResetPasswordVerify(values)
             .then((result) => {
                 const {message} = result;
-                console.log(result);
                 notification.success({message: "Password changed successfully"});
                 navigate("/auth/login");
             })
