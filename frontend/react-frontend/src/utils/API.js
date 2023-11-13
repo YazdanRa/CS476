@@ -11,7 +11,7 @@ export const setUpInterceptorStore = (_store) => {
 }
 
 const API = axios.create({
-    baseURL: "http://localhost:8000",
+    baseURL: "https://api.cs476.yazdanra.com",
     headers: {
         "Content-Type": "application/json",
     },
