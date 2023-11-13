@@ -1,5 +1,5 @@
 import React from "react";
-import {Routes as Switch, Route, Navigate} from "react-router-dom";
+import {Navigate, Route, Routes as Switch} from "react-router-dom";
 
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";

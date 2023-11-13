@@ -1,14 +1,14 @@
-import React, {useState} from 'react'
-import {useDispatch} from 'react-redux'
-import {Link, useNavigate} from 'react-router-dom'
-import {Input, notification, Typography} from 'antd'
-import {useFormik} from 'formik'
-import * as Yup from 'yup'
+import React, {useState} from "react"
+import {useDispatch} from "react-redux"
+import {Link, useNavigate} from "react-router-dom"
+import {Input, notification, Typography} from "antd"
+import {useFormik} from "formik"
+import * as Yup from "yup"
 
-import {OTPRequest, OTPVerify} from '../../../../services/auth'
-import {actions as authActions} from '../../../../store/authRedux/actions'
+import {OTPRequest, OTPVerify} from "../../../../services/auth"
+import {actions as authActions} from "../../../../store/authRedux/actions"
 
-import './styles.css'
+import "./styles.css"
 
 const initialValues = {
     email: undefined,
@@ -17,10 +17,10 @@ const initialValues = {
 
 const FormSchema = Yup.object({
     email: Yup.string()
-        .email('Please enter a valid email')
-        .required('This field is required'),
+        .email("Please enter a valid email")
+        .required("This field is required"),
     code: Yup.string()
-        .length(6, 'Code must be exactly 6 characters')
+        .length(6, "Code must be exactly 6 characters")
 })
 
 const OTPForm = () => {
@@ -48,7 +48,7 @@ const OTPForm = () => {
                 notification.success({message: message});
             })
             .catch((err) => {
-                notification.error({message: 'Something went wrong!'});
+                notification.error({message: "Something went wrong!"});
             })
     }
 
@@ -61,7 +61,7 @@ const OTPForm = () => {
                 navigate("/dashboard")
             })
             .catch((err) => {
-                notification.error({message: 'Something went wrong!'});
+                notification.error({message: "Something went wrong!"});
             })
     }
 
@@ -71,8 +71,8 @@ const OTPForm = () => {
 
             <Input
                 value={formik.values.email}
-                onChange={(e) => formik.setFieldValue('email', e.target.value)}
-                onBlur={() => formik.setFieldTouched('email', true)}
+                onChange={(e) => formik.setFieldValue("email", e.target.value)}
+                onBlur={() => formik.setFieldTouched("email", true)}
                 type="email"
                 placeholder="Email"
                 className="input-field"/>
@@ -85,8 +85,8 @@ const OTPForm = () => {
             {sentCode && (
                 <Input
                     value={formik.values.code}
-                    onChange={(e) => formik.setFieldValue('code', e.target.value)}
-                    onBlur={() => formik.setFieldTouched('code', true)}
+                    onChange={(e) => formik.setFieldValue("code", e.target.value)}
+                    onBlur={() => formik.setFieldTouched("code", true)}
                     placeholder="code"
                     className="input-field"/>
             )}
@@ -101,7 +101,7 @@ const OTPForm = () => {
                 onClick={() => formik.submitForm()}
                 className="login-button"
             >
-                {!sentCode ? 'Send Code' : 'Verify Code'}
+                {!sentCode ? "Send Code" : "Verify Code"}
             </button>
 
             <Link to="/login">

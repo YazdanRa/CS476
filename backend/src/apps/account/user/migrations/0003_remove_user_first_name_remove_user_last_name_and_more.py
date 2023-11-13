@@ -6,25 +6,25 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('user', '0002_remove_user_student_id'),
+        ("user", "0002_remove_user_student_id"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='user',
-            name='first_name',
+            model_name="user",
+            name="first_name",
         ),
         migrations.RemoveField(
-            model_name='user',
-            name='last_name',
+            model_name="user",
+            name="last_name",
         ),
         migrations.RemoveField(
-            model_name='user',
-            name='phone_number',
+            model_name="user",
+            name="phone_number",
         ),
         migrations.AddField(
-            model_name='user',
-            name='full_name',
-            field=models.CharField(blank=True, max_length=256, verbose_name='Full Name'),
+            model_name="user",
+            name="full_name",
+            field=models.CharField(blank=True, max_length=256, verbose_name="Full Name"),
         ),
     ]

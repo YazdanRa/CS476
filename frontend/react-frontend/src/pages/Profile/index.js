@@ -1,29 +1,29 @@
-import React, {useEffect} from 'react';
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useLocation} from "react-router-dom";
 import {useFormik} from "formik";
 import {Button, DatePicker, Input, notification, Typography, Upload} from "antd";
-import {UploadOutlined} from '@ant-design/icons'
+import {UploadOutlined} from "@ant-design/icons"
 import * as Yup from "yup";
 
 import {GetUser} from "../../services/auth";
 import {actions as authActions} from "../../store/authRedux/actions";
 import Menu from "../../components/Menu";
 
-import './Profile.css';
+import "./Profile.css";
 
 
 const FormSchema = Yup.object({
     full_name: Yup.string()
         .required("This field is required"),
     email: Yup.string()
-        .email('Please enter a valid email')
-        .required('This field is required'),
+        .email("Please enter a valid email")
+        .required("This field is required"),
     password: Yup.string().notRequired()
-        .min(8, 'Password must be at least 8 characters'),
+        .min(8, "Password must be at least 8 characters"),
     confirmation_password: Yup.string()
         .notRequired()
-        .equals([Yup.ref('password'), null], 'Passwords must match'),
+        .equals([Yup.ref("password"), null], "Passwords must match"),
     date_of_birth: Yup.date().nullable().notRequired(),
     profile_picture: Yup.mixed()
 })
@@ -87,10 +87,10 @@ const Profile = () => {
                 <Upload
                     onChange={(e) => {
                         formik.setFieldValue(
-                            'profile_picture',
+                            "profile_picture",
                             Array.from(e.fileList).map((item) => ({
                                 ...item,
-                                status: 'done',
+                                status: "done",
                             })),
                         )
                     }}
@@ -112,8 +112,8 @@ const Profile = () => {
                 placeholder="Full Name"
                 name="full_name"
                 value={formik.values.full_name}
-                onChange={(e) => formik.setFieldValue('full_name', e.target.value)}
-                onBlur={() => formik.setFieldTouched('full_name', true)}
+                onChange={(e) => formik.setFieldValue("full_name", e.target.value)}
+                onBlur={() => formik.setFieldTouched("full_name", true)}
             />
             {formik.errors.full_name && formik.touched.full_name && (
                 <Typography.Text type="danger">
@@ -128,8 +128,8 @@ const Profile = () => {
                 placeholder="Email"
                 name="email"
                 value={formik.values.email}
-                onChange={(e) => formik.setFieldValue('email', e.target.value)}
-                onBlur={() => formik.setFieldTouched('email', true)}
+                onChange={(e) => formik.setFieldValue("email", e.target.value)}
+                onBlur={() => formik.setFieldTouched("email", true)}
             />
             {formik.errors.email && formik.touched.email && (
                 <Typography.Text type="danger">
@@ -143,8 +143,8 @@ const Profile = () => {
                 placeholder="Password"
                 name="password"
                 value={formik.values.password}
-                onChange={(e) => formik.setFieldValue('password', e.target.value)}
-                onBlur={() => formik.setFieldTouched('password', true)}
+                onChange={(e) => formik.setFieldValue("password", e.target.value)}
+                onBlur={() => formik.setFieldTouched("password", true)}
             />
             {formik.errors.password && formik.touched.password && (
                 <Typography.Text type="danger">
@@ -158,8 +158,8 @@ const Profile = () => {
                 placeholder="Confirmation Password"
                 name="confirmation_password"
                 value={formik.values.confirmation_password}
-                onChange={(e) => formik.setFieldValue('confirmation_password', e.target.value)}
-                onBlur={() => formik.setFieldTouched('confirmation_password', true)}
+                onChange={(e) => formik.setFieldValue("confirmation_password", e.target.value)}
+                onBlur={() => formik.setFieldTouched("confirmation_password", true)}
             />
             {formik.errors.confirmation_password && formik.touched.confirmation_password && (
                 <Typography.Text type="danger">
@@ -171,8 +171,8 @@ const Profile = () => {
                 className="input"
                 placeholder="Date of Birth"
                 value={formik.values.date_of_birth}
-                onChange={(date) => formik.setFieldValue('date_of_birth', date)}
-                onBlur={() => formik.setFieldTouched('date_of_birth', true)}
+                onChange={(date) => formik.setFieldValue("date_of_birth", date)}
+                onBlur={() => formik.setFieldTouched("date_of_birth", true)}
             />
             {formik.errors.date_of_birth && formik.touched.date_of_birth && (
                 <Typography.Text type="danger">

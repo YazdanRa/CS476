@@ -1,6 +1,6 @@
-import {persistReducer} from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
-import {actionTypes} from './actions'
+import {persistReducer} from "redux-persist"
+import storage from "redux-persist/lib/storage"
+import {actionTypes} from "./actions"
 
 const initialAuthState = {
     user: undefined,
@@ -8,7 +8,7 @@ const initialAuthState = {
 }
 
 export const reducer = persistReducer(
-    {storage, key: 'panel-auth', whitelist: ['token', 'user']},
+    {storage, key: "panel-auth", whitelist: ["token", "user"]},
     (state = initialAuthState, action) => {
         switch (action.type) {
             case actionTypes.Login: {
@@ -22,7 +22,7 @@ export const reducer = persistReducer(
             }
 
             case actionTypes.Logout: {
-                storage.removeItem('persist:root')
+                storage.removeItem("persist:root")
                 return initialAuthState
             }
 

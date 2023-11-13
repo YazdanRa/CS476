@@ -1,9 +1,9 @@
 export const actionTypes = {
-    Login: '[Login] Action',
-    Register: '[Register] Action',
-    Logout: '[Logout] Action',
-    getUser: '[Get User] Action',
-    UpdateUser: '[Update User] Action',
+    Login: "[Login] Action",
+    Register: "[Register] Action",
+    Logout: "[Logout] Action",
+    getUser: "[Get User] Action",
+    UpdateUser: "[Update User] Action",
 }
 
 export const actions = {

@@ -7,23 +7,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0001_initial_onetimepassword'),
+        ("authentication", "0001_initial_onetimepassword"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='RestPasswordRequest',
+            name="RestPasswordRequest",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('email', models.EmailField(help_text='The email who requested the password reset.', max_length=254, verbose_name='email')),
-                ('auth_code', models.CharField(default=apps.account.authentication.models.random_auth_code_string, editable=False, help_text='The code used to authenticate the user.', max_length=6, verbose_name='Code')),
-                ('date_created', models.DateTimeField(auto_now_add=True, verbose_name='Date Created')),
-                ('last_modified', models.DateTimeField(auto_now=True, verbose_name='Last Modified')),
-                ('date_used', models.DateTimeField(default=None, null=True, verbose_name='Date Used')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("email", models.EmailField(help_text="The email who requested the password reset.", max_length=254, verbose_name="email")),
+                ("auth_code", models.CharField(default=apps.account.authentication.models.random_auth_code_string, editable=False, help_text="The code used to authenticate the user.", max_length=6, verbose_name="Code")),
+                ("date_created", models.DateTimeField(auto_now_add=True, verbose_name="Date Created")),
+                ("last_modified", models.DateTimeField(auto_now=True, verbose_name="Last Modified")),
+                ("date_used", models.DateTimeField(default=None, null=True, verbose_name="Date Used")),
             ],
             options={
-                'verbose_name': 'Password Reset',
-                'verbose_name_plural': 'Password Resets',
+                "verbose_name": "Password Reset",
+                "verbose_name_plural": "Password Resets",
             },
         ),
     ]

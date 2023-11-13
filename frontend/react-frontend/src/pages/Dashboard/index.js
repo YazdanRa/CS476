@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {Button, Input, notification, Space} from 'antd';
+import {Button, Input, notification, Space} from "antd";
 
 import Menu from "../../components/Menu";
 
-import './styles.css';
+import "./styles.css";
 import {useFormik} from "formik";
 import {getElectionByAccessCode} from "../../services/election";
 
@@ -13,7 +13,7 @@ function Dashboard() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [access_code, setAccessCode] = useState('');
+    const [access_code, setAccessCode] = useState("");
 
     const formik = useFormik({
         initialValues: {
@@ -48,7 +48,7 @@ function Dashboard() {
                 <div className="vote-container">
                     <h2>Vote</h2>
                     <p>Enter the survey access code to vote</p>
-                    <Space.Compact className="input-container" style={{width: '100%'}}>
+                    <Space.Compact className="input-container" style={{width: "100%"}}>
                         <Input
                             placeholder="Survey Code" maxLength={8}
                             value={formik.values.access_code}

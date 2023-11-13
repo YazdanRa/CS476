@@ -17,13 +17,13 @@ class MyElectionsListView(ListAPIView):
 class ElectionDetailByIdView(RetrieveAPIView):
     serializer_class = ElectionSerializer
     queryset = Election.objects.all()
-    lookup_field = 'id'
+    lookup_field = "pk"
 
 
 class ElectionDetailByAccessCodeView(RetrieveAPIView):
     serializer_class = ElectionSerializer
     queryset = Election.objects.all()
-    lookup_field = 'access_code'
+    lookup_field = "access_code"
 
     def get(self, request, *args, **kwargs):
         election = self.get_object()

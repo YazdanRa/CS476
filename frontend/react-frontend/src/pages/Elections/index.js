@@ -1,5 +1,5 @@
-import React from 'react'
-import {Routes as Switch, Route} from 'react-router-dom'
+import React from "react"
+import {Route, Routes as Switch} from "react-router-dom"
 
 import MyVotingHistory from "./pages/MyVotingHistory";
 import MyElections from "./pages/MyElections";

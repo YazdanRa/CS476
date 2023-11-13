@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {Button, notification, QRCode} from "antd";
 
 import {getMyElections} from "../../../../services/election";
 import Menu from "../../../../components/Menu";
 
-import './styles.css';
+import "./styles.css";
 
 
 function MyElections() {
@@ -55,7 +55,7 @@ function MyElections() {
                     </p>
                     <QRCode value={`https://cs476.yazdanra.com/elections/${entry.access_code}`}/>
                     <Button type="primary" onClick={() => {
-                        navigate(`myElections/${entry.id}`)
+                        navigate(`${entry.id}`)
                     }}> Modify this election ></Button>
 
                 </div>

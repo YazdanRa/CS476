@@ -1,14 +1,14 @@
-import React from 'react'
-import {Link, useNavigate} from 'react-router-dom'
-import {useDispatch} from 'react-redux'
-import {Input, notification, Typography} from 'antd'
-import {useFormik} from 'formik'
-import * as Yup from 'yup'
+import React from "react"
+import {Link, useNavigate} from "react-router-dom"
+import {useDispatch} from "react-redux"
+import {Input, notification, Typography} from "antd"
+import {useFormik} from "formik"
+import * as Yup from "yup"
 
-import {BasicLogin} from '../../../../services/auth'
-import {actions as authActions} from '../../../../store/authRedux/actions'
+import {BasicLogin} from "../../../../services/auth"
+import {actions as authActions} from "../../../../store/authRedux/actions"
 
-import './styles.css'
+import "./styles.css"
 
 const initialValues = {
     email: undefined,
@@ -17,11 +17,11 @@ const initialValues = {
 
 const FormSchema = Yup.object({
     email: Yup.string()
-        .email('Please enter a valid email')
-        .required('This field is required'),
+        .email("Please enter a valid email")
+        .required("This field is required"),
     password: Yup.string()
-        .min(8, 'Password must be at least 8 characters')
-        .required('This field is required'),
+        .min(8, "Password must be at least 8 characters")
+        .required("This field is required"),
 })
 
 const LoginForm = () => {
@@ -45,7 +45,7 @@ const LoginForm = () => {
                 navigate("/dashboard")
             })
             .catch((err) => {
-                notification.error({message: 'Email or password is wrong'})
+                notification.error({message: "Email or password is wrong"})
             })
     }
 
@@ -55,8 +55,8 @@ const LoginForm = () => {
 
             <Input
                 value={formik.values.email}
-                onChange={(e) => formik.setFieldValue('email', e.target.value)}
-                onBlur={() => formik.setFieldTouched('email', true)}
+                onChange={(e) => formik.setFieldValue("email", e.target.value)}
+                onBlur={() => formik.setFieldTouched("email", true)}
                 type="email"
                 placeholder="Email"
                 className="input-field"/>
@@ -68,8 +68,8 @@ const LoginForm = () => {
 
             <Input.Password
                 value={formik.values.password}
-                onChange={(e) => formik.setFieldValue('password', e.target.value)}
-                onBlur={() => formik.setFieldTouched('password', true)}
+                onChange={(e) => formik.setFieldValue("password", e.target.value)}
+                onBlur={() => formik.setFieldTouched("password", true)}
                 placeholder="Password"
                 className="input-field"/>
             {formik.errors.password && formik.touched.password && (

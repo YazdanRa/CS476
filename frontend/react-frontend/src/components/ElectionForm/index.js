@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {DatePicker, Input, notification, Radio, Switch} from 'antd'
-import {useFormik} from 'formik'
-import * as Yup from 'yup'
-import dayjs from 'dayjs';
+import {DatePicker, Input, notification, Switch} from "antd"
+import {useFormik} from "formik"
+import * as Yup from "yup"
+import dayjs from "dayjs";
 
 import {getElectionById} from "../../services/election";
 
-import './styles.css';
+import "./styles.css";
 
-const { RangePicker } = DatePicker;
+const {RangePicker} = DatePicker;
 
 const initialValues = {
     id: undefined,
@@ -24,20 +24,20 @@ const initialValues = {
 
 const FormSchema = Yup.object({
     title: Yup.string()
-        .required('This field is required'),
-    from_date: Yup.date().required('This field is required'),
+        .required("This field is required"),
+    from_date: Yup.date().required("This field is required"),
     to_date: Yup.date()
-        .required('This field is required')
-        .min(Yup.ref('from_date'), 'End date must be after start date'),
+        .required("This field is required")
+        .min(Yup.ref("from_date"), "End date must be after start date"),
     can_choose_multiple_options: Yup.boolean()
-        .required('This field is required'),
+        .required("This field is required"),
     show_results_after_election: Yup.boolean()
-        .required('This field is required'),
+        .required("This field is required"),
     vote_options: Yup.array().of(
         Yup.string()
-            .required('This field is required')
+            .required("This field is required")
             .nonNullable()
-    ).min(2, 'At least 2 options are required')
+    ).min(2, "At least 2 options are required")
 })
 
 const ElectionForm = () => {
@@ -49,7 +49,7 @@ const ElectionForm = () => {
         enableReinitialize: true,
         validationSchema: FormSchema,
         onSubmit: (values) => {
-            if(is_create_election_page) {
+            if (is_create_election_page) {
                 _createElection(values);
             } else {
                 _updateElection(values);
@@ -57,17 +57,7 @@ const ElectionForm = () => {
         },
     });
 
-    const is_create_election_page = location.pathname === '/elections/createElection';
-
-    const [_, set_vote_options] = useState(formik.values.vote_options)
-    const removeVoteOption = (index) => {
-        formik.values.vote_options.splice(index, 1);
-        set_vote_options([...formik.values.vote_options]);
-    }
-    const addVoteOption = () => {
-        formik.values.vote_options.push(undefined);
-        set_vote_options([...formik.values.vote_options]);
-    }
+    const is_create_election_page = location.pathname === "/elections/createElection";
 
     const _createElection = (values) => {
         console.log("create election");
@@ -81,7 +71,7 @@ const ElectionForm = () => {
     }
 
     const _getElection = () => {
-        const electionId = location.pathname.split('/').pop();
+        const electionId = location.pathname.split("/").pop();
         getElectionById(electionId)
             .then((result) => {
                 const serialized_data = {
@@ -98,7 +88,7 @@ const ElectionForm = () => {
             .catch((err) => {
                 if (err.response.status / 10 === 40) {
                     notification.error({message: "Sorry, this election does not exist or you do not have access to it"});
-                    navigate('/elections/myElections');
+                    navigate("/elections/myElections");
                 }
             })
     }
@@ -121,7 +111,13 @@ const ElectionForm = () => {
 
             <label>
                 Title:
-                <Input type="text" placeholder="Title" value={formik.values.title}/>
+                <Input
+                    type="text"
+                    placeholder="Title"
+                    value={formik.values.title}
+                    onChange={(event) => formik.setFieldValue("title", event.target.value)}
+                    onBlur={() => formik.setFieldTouched("title", true)}
+                />
             </label>
 
             <label>
@@ -129,8 +125,8 @@ const ElectionForm = () => {
                 <RangePicker
                     value={[formik.values.from_date, formik.values.to_date]}
                     onChange={(dates) => {
-                        formik.values.from_date = dates[0];
-                        formik.values.to_date = dates[1];
+                        formik.setFieldValue("from_date", dates[0]);
+                        formik.setFieldValue("to_date", dates[1]);
                     }}
                 />
             </label>
@@ -138,8 +134,8 @@ const ElectionForm = () => {
             <label>
                 Show result to participants after the end date:
                 <Switch
-                    value={formik.values.show_results_after_election}
-                    onChange={(checked) => formik.values.show_results_after_election = checked}
+                    checked={formik.values.show_results_after_election}
+                    onChange={(checked) => formik.setFieldValue("show_results_after_election", checked)}
                 />
             </label>
 
@@ -151,28 +147,34 @@ const ElectionForm = () => {
                             type="text"
                             placeholder="option title"
                             value={vote_option_title}
-                            onChange={(event) => {
-                                formik.values.vote_options[index] = event.target.value
-                            }}
-                            onBlur={(event) => set_vote_options([...formik.values.vote_options])}
+                            onChange={(event) => formik.setFieldValue(`vote_options[${index}]`, event.target.value)}
+                            onBlur={(event) => formik.setFieldTouched(`vote_options[${index}]`, true)}
                         />
                         {formik.values.vote_options.length > 2 && (
                             <button
                                 className="remove-button"
-                                onClick={() => removeVoteOption(index)}
+                                onClick={() => {
+                                    const new_vote_options = [...formik.values.vote_options];
+                                    new_vote_options.splice(index, 1);
+                                    formik.setFieldValue("vote_options", new_vote_options);
+                                }}
                             > - </button>
                         )}
                     </div>
                 ))}
-                <button className="add-button" onClick={() => addVoteOption()}> +</button>
+                <button
+                    className="add-button"
+                    onClick={() => formik.setFieldValue("vote_options", [...formik.values.vote_options, undefined])}
+                > +
+                </button>
             </label>
 
             <button className="submit-button" onClick={() => formik.submitForm()}>
                 {is_create_election_page && (
-                    <p>Create Survey</p>
+                    <>Create Survey</>
                 )}
                 {!is_create_election_page && (
-                    <p>Save Changes</p>
+                    <>Save Changes</>
                 )}
             </button>
         </div>

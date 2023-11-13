@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from "react";
 import {useLocation} from "react-router-dom";
 import {notification} from "antd";
 
 import {getVotingHistory} from "../../../../services/election";
 import Menu from "../../../../components/Menu";
 
-import './styles.css';
+import "./styles.css";
 
 
 function MyVotingHistory() {

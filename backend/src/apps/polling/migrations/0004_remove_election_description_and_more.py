@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('polling', '0003_vote'),
+        ("polling", "0003_vote"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='election',
-            name='description',
+            model_name="election",
+            name="description",
         ),
         migrations.AddField(
-            model_name='election',
-            name='show_results_after_election',
-            field=models.BooleanField(default=False, verbose_name='Show results after election'),
+            model_name="election",
+            name="show_results_after_election",
+            field=models.BooleanField(default=False, verbose_name="Show results after election"),
         ),
     ]
