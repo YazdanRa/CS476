@@ -25,7 +25,7 @@ class ElectionProxyWithAccessCodeSerializer(ElectionProxySerializer):
 class VoteOptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = VoteOption
-        fields = ["id", "title", "description"]
+        fields = ["id", "title"]
 
 
 class VoteOptionWithResultSerializer(serializers.ModelSerializer):

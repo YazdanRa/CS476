@@ -5,7 +5,7 @@ import {useFormik} from "formik"
 import * as Yup from "yup"
 import dayjs from "dayjs";
 
-import {createElection, getElectionById} from "../../services/election";
+import {createElection, getElectionById, modifyElection} from "../../services/election";
 
 import "./styles.css";
 
@@ -59,8 +59,6 @@ const ElectionForm = () => {
     const is_create_election_page = location.pathname === "/elections/createElection";
 
     const _createElection = (values) => {
-        console.log("create election");
-        console.log(values);
         const serialized_data = {
             title: values.title,
             from_date: values.from_date,
@@ -77,13 +75,27 @@ const ElectionForm = () => {
             })
             .catch((err) => {
                 console.log(err);
+                notification.error({message: "Sorry, something went wrong"});
             })
     }
 
     const _updateElection = (values) => {
-        console.log("update election");
-        console.log(values);
-
+        const serialized_data = {
+            title: values.title,
+            from_date: values.from_date,
+            to_date: values.to_date,
+            associated_groups: [],
+            show_results_after_election: values.show_results_after_election,
+            options: values.vote_options.map(option => ({title: option})),
+        }
+        modifyElection(values.id, serialized_data)
+            .then((result) => {
+                notification.success({message: "Election successfully updated!"});
+            })
+            .catch((err) => {
+                console.log(err);
+                notification.error({message: "Sorry, something went wrong"});
+            })
     }
 
     const _getElection = () => {
@@ -152,9 +164,9 @@ const ElectionForm = () => {
                         formik.setFieldValue("from_date", dates[0]);
                         formik.setFieldValue("to_date", dates[1]);
                     }}
-                    onBlur={() => {
-                        formik.setFieldTouched("from_date", true);
-                        formik.setFieldTouched("to_date", true);
+                    onOK={(dates) => {
+                        formik.setFieldValue("from_date", dates[0]);
+                        formik.setFieldValue("to_date", dates[1]);
                     }}
                 />
                 {formik.errors.from_date && formik.touched.from_date && (

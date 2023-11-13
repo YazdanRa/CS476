@@ -1,6 +1,6 @@
 from rest_framework.generics import CreateAPIView
 
-from apps.polling.serializers import CreateElectionSerializer
+from apps.polling.serializers import ActionElectionSerializer
 
 
 class CreateElectionView(CreateAPIView):
@@ -8,4 +8,4 @@ class CreateElectionView(CreateAPIView):
     Create election gateway
     """
 
-    serializer_class = CreateElectionSerializer
+    serializer_class = ActionElectionSerializer

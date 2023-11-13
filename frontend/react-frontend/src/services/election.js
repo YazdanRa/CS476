@@ -4,8 +4,9 @@ const GET_MY_ELECTIONS_URL = "/elections/my"
 const CREATE_ELECTION_URL = "/elections/create"
 const GET_ELECTION_BY_ID_URL = (electionId) => `/elections/byID/${electionId}`
 const GET_ELECTION_BY_ACCESS_CODE_URL = (accessCode) => `/elections/byAccessCode/${accessCode}`
-const RECORD_VOTE_URL = (electionId) => `/elections/${electionId}/recordVote`
+const RECORD_VOTE_URL = (electionId) => `/elections/byID/${electionId}/recordVote`
 const VOTING_HISTORY_URL = "/elections/votingHistory"
+const MODIFY_ELECTION_URL = (electionId) => `/elections/byID/${electionId}/modify`
 
 export const getMyElections = () => {
     return API.get(GET_MY_ELECTIONS_URL)
@@ -29,4 +30,8 @@ export const recordVote = (electionId, data) => {
 
 export const getVotingHistory = () => {
     return API.get(VOTING_HISTORY_URL)
+}
+
+export const modifyElection = (electionId, data) => {
+    return API.put(MODIFY_ELECTION_URL(electionId), data)
 }

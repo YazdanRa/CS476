@@ -12,6 +12,7 @@ urlpatterns = [
             [
                 path("", views.ElectionDetailByIdView.as_view(), name="election-detail-id"),
                 path("recordVote", views.RecordVoteView.as_view(), name="record-vote"),
+                path("modify", views.ModifyElectionView.as_view(), name="modify-election"),
             ]
         )
     ),
