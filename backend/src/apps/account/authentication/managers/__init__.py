@@ -1,1 +1,2 @@
 from .one_time_password_manager import OneTimePasswordManager
+from .reset_password_manager import ResetPasswordManager

@@ -4,7 +4,7 @@ import {Input, notification, Typography} from "antd";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
 
-import {ResetPasswordRequest} from "../../../../services/auth";
+import {ResetPasswordRequest, ResetPasswordVerify} from "../../../../services/auth";
 
 import './styles.css';
 
@@ -49,19 +49,28 @@ function ResetPassword() {
 
 
     const _handleSendCode = (values) => {
-        console.log(values);
         ResetPasswordRequest({email: values.email})
             .then(
-            (result) => {
-                const {message} = result;
-                notification.success({message: message});
-            })
+                (result) => {
+                    const {message} = result;
+                    notification.success({message: message});
+                })
             .catch((err) => {
                 notification.error({message: 'Something went wrong!'});
             })
     };
 
     const _handleChangePassword = (values) => {
+        ResetPasswordVerify(values)
+            .then((result) => {
+                const {message} = result;
+                console.log(result);
+                notification.success({message: "Password changed successfully"});
+                navigate("/auth/login");
+            })
+            .catch((err) => {
+                notification.error({message: 'Something went wrong!'});
+            })
 
     };
 
@@ -79,6 +88,7 @@ function ResetPassword() {
                     onChange={e => formik.setFieldValue("email", e.target.value)}
                     onBlur={() => formik.setFieldTouched("email", true)}
                     status={formik.errors.email && formik.touched.email ? "error" : undefined}
+                    disabled={auth_requested}
                 />
                 {formik.errors.email && formik.touched.email && (
                     <Typography.Text type="danger">

@@ -1,4 +1,4 @@
-from rest_framework.status import HTTP_200_OK
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -24,12 +24,11 @@ class ResetPasswordRequestView(APIView):
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            reset_password_request = serializer.create_request()
-
-            response_data = self.get_serializer(instance=reset_password_request).data
-            del response_data["new_password"]
-            return Response(data=response_data, status=HTTP_200_OK)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=dict(message="Reset password code has been sent to your email"), status=HTTP_200_OK)
+        else:
+            return Response(data=dict(message=serializer.errors), status=HTTP_400_BAD_REQUEST)
 
 
 class ResetPasswordVerifyView(APIView):
@@ -52,5 +51,5 @@ class ResetPasswordVerifyView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.set_new_password(new_password=self.request.data.get("new_password"))
+            serializer.set_new_password()
             return Response(data=dict(message="Your password successfully updated!"), status=HTTP_200_OK)

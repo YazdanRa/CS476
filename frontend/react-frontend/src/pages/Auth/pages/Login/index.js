@@ -85,7 +85,7 @@ const LoginForm = () => {
             >Login
             </button>
 
-            <a href="/auth/resetPassword" className="forgot-password">Forgot your password?</a>
+            <Link to="/resetPassword" className="forgot-password">Forgot Password?</Link>
 
             <Link to="/otp">
                 <button className="signup-button">Login with One Time Password (OTP)</button>

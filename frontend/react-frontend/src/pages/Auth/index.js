@@ -16,7 +16,7 @@ const AuthenticationPage = () => {
             <Route path="/login" exact element={<Login/>}/>
             <Route path="/logout" exact element={<Logout/>}/>
             <Route path="/signup" exact element={<Signup/>}/>
-            <Route path="resetPassword" exact element={<ResetPassword/>}/>
+            <Route path="/resetPassword" exact element={<ResetPassword/>}/>
         </Switch>
     )
 }

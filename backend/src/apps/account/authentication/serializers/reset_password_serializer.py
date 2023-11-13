@@ -14,17 +14,13 @@ class ResetPasswordRequestSerializer(serializers.ModelSerializer):
         model = RestPasswordRequest
         fields = ["email"]
 
-    def get_user(self) -> User:
+    def validate_email(self, email):
         """
-        check if user exists
+        validate email and return it!
         """
-        try:
-            return User.objects.get(email__iexact=self.data.get("email"))
-        except User.DoesNotExist:
+        if not User.objects.filter(email__iexact=email).exists():
             raise serializers.ValidationError("User does not exist!")
-
-    def create_request(self) -> RestPasswordRequest:
-        return RestPasswordRequest.objects.create(user=self.get_user())
+        return email
 
 
 class ResetPasswordVerifySerializer(serializers.ModelSerializer):
@@ -57,17 +53,26 @@ class ResetPasswordVerifySerializer(serializers.ModelSerializer):
         new_password = data.get("new_password")
 
         try:
-            reset_password_request = RestPasswordRequest.objects.get(email=email)
+            reset_password_request = RestPasswordRequest.objects.get(email=email, auth_code=auth_code)
         except RestPasswordRequest.DoesNotExist:
-            raise serializers.ValidationError("You should request a reset password first!")
+            raise serializers.ValidationError("There is no reset password request with this credentials!")
 
         if reset_password_request.is_expired() or reset_password_request.is_used():
             raise serializers.ValidationError("Reset password request has expired!")
-
-        if reset_password_request.auth_code != auth_code:
-            raise serializers.ValidationError("Invalid auth code!")
 
         validate_password(new_password)
 
         return data
 
+    def set_new_password(self):
+        """
+        set new password for user!
+        """
+        email = self.validated_data.get("email")
+        auth_code = self.validated_data.get("auth_code")
+        reset_password_request = RestPasswordRequest.objects.get(email=email, auth_code=auth_code)
+
+        new_password = self.validated_data.get("new_password")
+        reset_password_request.user.set_password(new_password)
+        reset_password_request.user.save()
+        reset_password_request.set_used()

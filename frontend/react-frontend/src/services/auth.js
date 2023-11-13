@@ -7,8 +7,8 @@ const REGISTER_URL = '/auth/token/register'
 const LOGOUT_URL = '/auth/token/logout'
 const GET_ME_URL = '/user/info'
 
-const RESET_PASSWORD_REQUEST_URL = '/auth/password/reset/request'
-const RESET_PASSWORD_VERIFY_URL = '/auth/password/reset/verify'
+const RESET_PASSWORD_REQUEST_URL = '/auth/resetPassword/request'
+const RESET_PASSWORD_VERIFY_URL = '/auth/resetPassword/verify'
 
 export const OTPRequest = (data) => {
     return API.post(OTP_REQUEST_URL, data)

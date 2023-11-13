@@ -4,7 +4,6 @@ import {Routes as Switch, Route, Navigate} from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import Elections from "./pages/Elections";
-import Auth from "./pages/Auth";
 
 const BasePage = () => {
 
@@ -15,7 +14,6 @@ const BasePage = () => {
             <Route path="/profile" element={<Profile/>}/>
 
             <Route path="/elections/*" element={<Elections/>}/>
-            <Route path="/auth/*" element={<Auth/>}/>
         </Switch>
     );
 };

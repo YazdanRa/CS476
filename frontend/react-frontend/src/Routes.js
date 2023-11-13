@@ -17,7 +17,9 @@ const Routes = () => {
                     <Route path="*" element={<BasePage/>}/>
                 </Switch>
             ) : (
-                <Auth/>
+                <Switch>
+                    <Route path="*" element={<Auth/>}/>
+                </Switch>
             )}
         </>
     )
