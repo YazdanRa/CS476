@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './CSS/Vote.css';
+import './Vote.css';
 
 function SurveyPage() {
     const [showMenu, setShowMenu] = useState(false);
