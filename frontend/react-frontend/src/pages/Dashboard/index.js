@@ -47,7 +47,7 @@ function Dashboard() {
 
                 <div className="vote-container">
                     <h2>Vote</h2>
-                    <p>Enter the survey access code to vote</p>
+                    <p>Enter the survey access code</p>
                     <Space.Compact className="input-container" style={{width: "100%"}}>
                         <Input
                             placeholder="Survey Code" maxLength={8}
@@ -62,7 +62,6 @@ function Dashboard() {
                 <div className="create-survey-container">
                     <h2>Create a Survey</h2>
                     <p>Create and share a survey</p>
-                    <p className="subtext">more detail</p>
                     <button onClick={() => {
                         navigate("/elections/createElection");
                     }}>Create
