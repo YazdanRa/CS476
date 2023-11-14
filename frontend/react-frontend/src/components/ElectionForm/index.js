@@ -157,7 +157,7 @@ const ElectionForm = () => {
                 Election Period:<br/>
                 <RangePicker
                     showTime={{format: "HH:mm"}}
-                    value={[formik.values.from_date, formik.values.to_date]}
+                    value={[dayjs(formik.values.from_date), dayjs(formik.values.to_date)]}
                     onChange={(dates) => {
                         formik.setFieldValue("from_date", dates[0]);
                         formik.setFieldValue("to_date", dates[1]);
