@@ -58,3 +58,10 @@
     width: 500px;
     height: 35px;
 }
+
+.login-button_home {
+  background-color: #4caf50;
+  color: #ffffff;
+  width: 300px;
+  height: 35px;
+}

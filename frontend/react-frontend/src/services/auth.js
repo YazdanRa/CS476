@@ -23,6 +23,10 @@ export const BasicLogin = (data) => {
     return API.post(BASIC_LOGIN_URL, data)
 }
 
+export const BasicSignup = (data) => {
+    return API.post(BASIC_Signup_URL, data)
+}
+
 export const RegisterUser = (data) => {
     return API.post(REGISTER_URL, data)
 }
