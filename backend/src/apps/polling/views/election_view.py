@@ -4,7 +4,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.status import HTTP_425_TOO_EARLY, HTTP_410_GONE, HTTP_412_PRECONDITION_FAILED, HTTP_403_FORBIDDEN
 
 from apps.polling.models import Election
-from apps.polling.serializers import ElectionSerializer, ElectionProxyWithAccessCodeSerializer
+from apps.polling.serializers import (
+    ElectionSerializer,
+    ElectionProxyWithAccessCodeSerializer,
+    ElectionResultsSerializer
+)
 
 
 class MyElectionsListView(ListAPIView):
@@ -25,7 +29,7 @@ class ElectionDetailByIdView(RetrieveAPIView):
 
 class ElectionResultsView(RetrieveAPIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = ElectionSerializer
+    serializer_class = ElectionResultsSerializer
     queryset = Election.objects.all()
     lookup_field = "pk"
 
