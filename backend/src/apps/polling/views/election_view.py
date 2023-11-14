@@ -30,7 +30,7 @@ class ElectionResultsView(RetrieveAPIView):
     lookup_field = "pk"
 
     def get(self, request, **kwargs):
-        election = self.get_obj()
+        election = self.get_object()
         user = request.user
         if election.creator != user and election.show_results_after_election == False:
             return Response(
