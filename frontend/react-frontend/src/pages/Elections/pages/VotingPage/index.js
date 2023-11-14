@@ -63,11 +63,10 @@ function SurveyPage() {
 
             <Menu current_path={location.pathname}/>
 
-            <h1>Survey Name</h1>
+            <h1>{election.title}</h1>
 
             <p>{election.from_date} to {election.to_date} by {election.creator}</p>
 
-            <p className="question-block">{election.title}</p>
             <Radio.Group
                 value={selected_option}
                 onChange={(event) => setSelectedOption(event.target.value)}

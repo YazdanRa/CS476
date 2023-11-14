@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {notification, Space} from "antd";
+import {notification, Progress, Space} from "antd";
 
 import {getElectionResults} from "../../../../services/election";
 import Menu from "../../../../components/Menu";
@@ -41,7 +41,7 @@ function ElectionResults() {
     }, []);
 
     return (
-        <div className="survey-container">
+        <div className="history-container">
 
             <Menu current_path={location.pathname}/>
 
@@ -54,9 +54,9 @@ function ElectionResults() {
                 {election.vote_options.map((vote_option, index) => (
                     <div>
                         <div>
-                            <p>{vote_option.title}</p>
-                            <p>Votes Count: {vote_option.votes_count}</p>
-                            <p>Votes Percentage: {vote_option.vote_percentage}</p>
+                            <p className="entry-info">{vote_option.title}</p>
+                            <p className="entry-info">Votes Count: {vote_option.votes_count}</p>
+                            <Progress percent={vote_option.vote_percentage} />
                             <hr/>
                         </div>
                     </div>
@@ -64,6 +64,8 @@ function ElectionResults() {
             </Space>
 
         </div>
+
+
     );
 }
 

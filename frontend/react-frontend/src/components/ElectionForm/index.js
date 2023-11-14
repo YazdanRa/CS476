@@ -182,6 +182,7 @@ const ElectionForm = () => {
             <label>
                 Show result to participants after the end date:
                 <Switch
+                    className="narrow-switch"
                     checked={formik.values.show_results_after_election}
                     onChange={(checked) => formik.setFieldValue("show_results_after_election", checked)}
                 />
@@ -227,11 +228,11 @@ const ElectionForm = () => {
                     onClick={() => formik.setFieldValue("vote_options", [...formik.values.vote_options, undefined])}
                 > +
                 </button>
-                {/*{formik.errors.vote_options && formik.touched.vote_options && (*/}
-                {/*    <Typography.Text type="danger">*/}
-                {/*        {formik.errors.vote_options}*/}
-                {/*    </Typography.Text>*/}
-                {/*)}*/}
+                {formik.errors.vote_options && formik.touched.vote_options && (
+                    <Typography.Text type="danger">
+                        At least two voting options are required
+                    </Typography.Text>
+                )}
             </label>
 
             <Button onClick={() => formik.submitForm()}>
