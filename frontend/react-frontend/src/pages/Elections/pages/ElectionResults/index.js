@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useLocation, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {notification, Space} from "antd";
 
 import {getElectionResults} from "../../../../services/election";
@@ -19,6 +19,7 @@ const initialValues = {
 
 function ElectionResults() {
     const location = useLocation();
+    const navigate = useNavigate()
     const params = useParams();
 
     const electionId = params.id;
@@ -30,7 +31,8 @@ function ElectionResults() {
                 setElection(result);
             })
             .catch((error) => {
-                notification.error({message: "Error in fetching data"});
+                notification.error({message: error.response.data.message});
+                navigate("/dashboard");
             });
     }
 
