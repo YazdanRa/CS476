@@ -57,6 +57,9 @@ function MyElections() {
                     <Button type="primary" onClick={() => {
                         navigate(`${entry.id}`)
                     }}> Modify this election ></Button>
+                    <Button type="primary" onClick={() => {
+                        navigate(`/elections/results/${entry.id}`)
+                    }}> See the results ></Button>
 
                 </div>
             ))}
