@@ -31,33 +31,29 @@ class VoteOptionSerializer(serializers.ModelSerializer):
 class VoteOptionWithResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = VoteOption
-        fields = ["id", "title", "description", "count"]
+        fields = ["id", "title", "description", "votes_count", "vote_percentage"]
 
 
 class ElectionSerializer(serializers.ModelSerializer):
     status = serializers.ReadOnlyField()
     creator = UserProxySerializer(read_only=True)
-    vote_options = VoteOptionSerializer(many=True, read_only=True, source="options")
-    can_vote = serializers.SerializerMethodField()
+    vote_options = serializers.SerializerMethodField(read_only=True)
     creator = serializers.ReadOnlyField(source="creator.full_name")
-    can_see_results = serializers.SerializerMethodField()
 
     class Meta:
         model = Election
-        include = ["Status", "can_vote", "can_see_results"]
+        include = ["Status", "can_vote", "vote_options"]
         exclude = ["date_created", "last_modified"]
 
-    def get_can_vote(self, obj):
-        # TODO: Check if the user is eligible to vote for this election.
-        return obj.is_active and self.context.get("request").user.is_authenticated
-
-    def get_can_see_results(self, obj: Election):
-        return obj.to_date < now() and self.context.get("request").user == obj.creator
+    def get_vote_options(self, obj):
+        return VoteOptionSerializer(obj.options_list, many=True).data
 
 
 class ElectionResultsSerializer(ElectionSerializer):
-    vote_options = VoteOptionWithResultSerializer(read_only=True, many=True)
+    vote_options = serializers.SerializerMethodField(read_only=True)
 
+    def get_vote_options(self, obj):
+        return VoteOptionWithResultSerializer(obj.options_list, many=True).data
 
 class VotingHistorySerializer(ElectionSerializer):
     my_vote = serializers.SerializerMethodField(read_only=True)
