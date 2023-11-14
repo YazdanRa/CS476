@@ -55,7 +55,9 @@ function ElectionResults() {
                     <div>
                         <div>
                             <p>{vote_option.title}</p>
-                            <p>{vote_option.count}</p>
+                            <p>Votes Count: {vote_option.votes_count}</p>
+                            <p>Votes Percentage: {vote_option.vote_percentage}</p>
+                            <hr/>
                         </div>
                     </div>
                 ))}
