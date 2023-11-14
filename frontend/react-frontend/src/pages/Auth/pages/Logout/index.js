@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react'
-import {useNavigate} from 'react-router-dom'
-import {shallowEqual, useDispatch, useSelector} from 'react-redux'
+import React, {useEffect} from "react"
+import {useNavigate} from "react-router-dom"
+import {shallowEqual, useDispatch, useSelector} from "react-redux"
 import {notification} from "antd";
 
-import {Logout as LogoutService} from '../../../../services/auth'
-import * as authActions from '../../../../store/authRedux/actions'
+import {Logout as LogoutService} from "../../../../services/auth"
+import * as authActions from "../../../../store/authRedux/actions"
 
 
 const Logout = () => {
@@ -22,15 +22,15 @@ const Logout = () => {
         LogoutService()
             .then((result) => {
                 dispatch(authActions.actions.logout())
-                navigate('/login')
-                notification.success({message: "You've successfully logged out!"})
+                navigate("/login")
+                notification.success({message: "You have successfully logged out!"})
             })
             .catch((err) => {
                 notification.error({message: "Oops! Something went wrong..."})
             })
     }, [])
 
-    return <div></div>
+    return <></>
 }
 
 export default Logout;

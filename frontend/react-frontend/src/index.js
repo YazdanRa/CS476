@@ -1,12 +1,12 @@
-import ReactDOM from 'react-dom/client';
+import ReactDOM from "react-dom/client";
 
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 import store, {persistor} from "./store/store";
 
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
     <App store={store} persistor={persistor}/>
 );
 

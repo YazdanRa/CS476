@@ -1,23 +1,23 @@
-import React, {useState} from 'react';
-import {useLocation, useNavigate} from "react-router-dom";
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import {Input, notification, Typography} from "antd";
 import {useFormik} from "formik";
-import * as Yup from 'yup';
+import * as Yup from "yup";
 
-import {ResetPasswordRequest} from "../../../../services/auth";
+import {ResetPasswordRequest, ResetPasswordVerify} from "../../../../services/auth";
 
-import './styles.css';
+import "./styles.css";
 
 const FormSchema = Yup.object({
     email: Yup.string()
-        .email('Please enter a valid email')
-        .required('This field is required'),
+        .email("Please enter a valid email")
+        .required("This field is required"),
     auth_code: Yup.string()
-        .length(6, 'Code must be exactly 6 characters'),
-    password: Yup.string()
-        .min(8, 'Password must be at least 8 characters'),
-    confirm_password: Yup.string()
-        .equals([Yup.ref('password')], 'Passwords must match')
+        .length(6, "Code must be exactly 6 characters"),
+    new_password: Yup.string()
+        .min(8, "Password must be at least 8 characters"),
+    confirm_new_password: Yup.string()
+        .equals([Yup.ref("new_password")], "Passwords must match")
 })
 
 const initialValues = {
@@ -28,7 +28,6 @@ const initialValues = {
 }
 
 function ResetPassword() {
-    const location = useLocation();
     const navigate = useNavigate();
 
     const [auth_requested, setAuthRequested] = useState(false);
@@ -40,7 +39,6 @@ function ResetPassword() {
         onSubmit: values => {
             if (!auth_requested) {
                 _handleSendCode(values);
-                setAuthRequested(true);
             } else {
                 _handleChangePassword(values);
             }
@@ -49,19 +47,28 @@ function ResetPassword() {
 
 
     const _handleSendCode = (values) => {
-        console.log(values);
         ResetPasswordRequest({email: values.email})
             .then(
-            (result) => {
-                const {message} = result;
-                notification.success({message: message});
-            })
+                (result) => {
+                    const {message} = result;
+                    notification.success({message: message});
+                    setAuthRequested(true);
+                })
             .catch((err) => {
-                notification.error({message: 'Something went wrong!'});
+                notification.error({message: "Something went wrong!"});
             })
     };
 
     const _handleChangePassword = (values) => {
+        ResetPasswordVerify(values)
+            .then((result) => {
+                const {message} = result;
+                notification.success({message: "Password changed successfully"});
+                navigate("/auth/login");
+            })
+            .catch((err) => {
+                notification.error({message: "Something went wrong!"});
+            })
 
     };
 
@@ -79,6 +86,7 @@ function ResetPassword() {
                     onChange={e => formik.setFieldValue("email", e.target.value)}
                     onBlur={() => formik.setFieldTouched("email", true)}
                     status={formik.errors.email && formik.touched.email ? "error" : undefined}
+                    disabled={auth_requested}
                 />
                 {formik.errors.email && formik.touched.email && (
                     <Typography.Text type="danger">

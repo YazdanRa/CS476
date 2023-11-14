@@ -7,13 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('user', '0003_remove_user_first_name_remove_user_last_name_and_more'),
+        ("user", "0003_remove_user_first_name_remove_user_last_name_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='profile_picture',
-            field=models.ImageField(blank=True, null=True, upload_to=apps.account.user.models.upload_profile_place_pics, verbose_name='Profile Picture'),
+            model_name="user",
+            name="profile_picture",
+            field=models.ImageField(blank=True, null=True, upload_to=apps.account.user.models.upload_profile_place_pics, verbose_name="Profile Picture"),
         ),
     ]

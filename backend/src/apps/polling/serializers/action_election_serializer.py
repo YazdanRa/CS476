@@ -5,16 +5,11 @@ from django.contrib.auth.models import Group
 from rest_framework import serializers
 
 from apps.account.user.serializers import GroupSerializer
-from apps.polling.models import Election, VoteOption
+from apps.polling.models import Election
+from apps.polling.serializers.election_serializer import VoteOptionSerializer
 
 
-class VoteOptionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = VoteOption
-        fields = ["title", "description"]
-
-
-class CreateElectionSerializer(serializers.Serializer):
+class ActionElectionSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     title = serializers.CharField(max_length=256, allow_null=False, allow_blank=False)
 
@@ -69,3 +64,24 @@ class CreateElectionSerializer(serializers.Serializer):
             election.associated_groups.add(group)
 
         return election
+
+    def update(self, instance: Election, validated_data: dict) -> Election:
+        options = validated_data.pop("options")
+        groups = validated_data.pop("associated_groups")
+
+        instance.title = validated_data.get("title", instance.title)
+        instance.can_choose_multiple_options = validated_data.get("can_choose_multiple_options", instance.can_choose_multiple_options)
+        instance.show_results_after_election = validated_data.get("show_results_after_election", instance.show_results_after_election)
+        instance.from_date = validated_data.get("from_date", instance.from_date)
+        instance.to_date = validated_data.get("to_date", instance.to_date)
+
+        instance.options.all().delete()
+        for option in options:
+            instance.options.get_or_create(**option)
+
+        instance.associated_groups.clear()
+        for group in groups:
+            instance.associated_groups.add(group)
+
+        instance.save()
+        return instance

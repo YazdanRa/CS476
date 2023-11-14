@@ -112,6 +112,10 @@ class Election(models.Model):
         return self.options.all().annotate(count=models.Count("votes")).order_by("-count")
 
     @property
+    def options_list(self) -> List["VoteOption"]:
+        return list(self.options.all())
+
+    @property
     def winners(self) -> Optional[List["VoteOption"]]:
         if not self.is_closed:
             return None

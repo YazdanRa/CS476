@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 import {useLocation} from "react-router-dom";
 
 import Menu from "../../../../components/Menu";
 import ElectionForm from "../../../../components/ElectionForm";
 
-import './styles.css';
+import "./styles.css";
 
 
 function NewSurvey() {

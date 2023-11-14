@@ -7,23 +7,23 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('polling', '0001_initial'),
+        ("polling", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='VoteOption',
+            name="VoteOption",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=256, verbose_name='Title')),
-                ('description', models.TextField(blank=True, max_length=2048, null=True, verbose_name='Description')),
-                ('date_created', models.DateTimeField(auto_now_add=True, verbose_name='Created at')),
-                ('last_modified', models.DateTimeField(auto_now=True, verbose_name='Last modified')),
-                ('election', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='options', to='polling.election', verbose_name='Election')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("title", models.CharField(max_length=256, verbose_name="Title")),
+                ("description", models.TextField(blank=True, max_length=2048, null=True, verbose_name="Description")),
+                ("date_created", models.DateTimeField(auto_now_add=True, verbose_name="Created at")),
+                ("last_modified", models.DateTimeField(auto_now=True, verbose_name="Last modified")),
+                ("election", models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name="options", to="polling.election", verbose_name="Election")),
             ],
             options={
-                'verbose_name': 'Vote Option',
-                'verbose_name_plural': 'Vote Options',
+                "verbose_name": "Vote Option",
+                "verbose_name_plural": "Vote Options",
             },
         ),
     ]

@@ -1,7 +1,9 @@
-import React, {useRef, useEffect, useState} from 'react'
-import {shallowEqual, useSelector, connect, useDispatch} from 'react-redux'
-import {actions as authActions} from '../store/authRedux/actions'
-import {GetUser, Logout} from '../services/auth'
+import React, {useEffect, useRef} from "react"
+import {connect, shallowEqual, useDispatch, useSelector} from "react-redux"
+
+import {actions as authActions} from "../store/authRedux/actions"
+import {GetUser, Logout} from "../services/auth"
+
 
 function AuthProvider(props) {
     const didRequest = useRef(false)
@@ -23,7 +25,6 @@ function AuthProvider(props) {
                     dispatch(props.updateUser({...user}))
                 }
             } catch (error) {
-                console.log(error)
                 Logout().then(
                     dispatch(props.logout())
                 )

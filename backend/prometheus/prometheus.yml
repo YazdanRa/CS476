@@ -1,0 +1,19 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+  external_labels:
+    monitor: 'cs476'
+
+rule_files:
+  - 'django.rules'
+
+
+
+scrape_configs:
+  - job_name: 'api'
+    scrape_interval: 15s
+    metrics_path: "/metrics"
+    scheme: "https"
+    static_configs:
+      - targets: ['api.cs476.yazdanra.com']

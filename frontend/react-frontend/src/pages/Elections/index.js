@@ -1,23 +1,23 @@
-import React from 'react'
-import {Routes as Switch, Route} from 'react-router-dom'
+import React from "react"
+import {Route, Routes as Switch} from "react-router-dom"
 
 import MyVotingHistory from "./pages/MyVotingHistory";
 import MyElections from "./pages/MyElections";
 import CreateElection from "./pages/CreateElection";
 import ModifyElection from "./pages/ModifyElection";
-import ViewElection from "./pages/ViewElection";
 import VotingPage from "./pages/VotingPage";
+import ElectionResults from "./pages/ElectionResults";
 
 
 const ElectionsPage = () => {
     return (
         <Switch>
+            <Route path="/:access_code" exact element={<VotingPage/>}/>
+            <Route path="/results/:id" exact element={<ElectionResults/>}/>
             <Route path="/myVotingHistory" exact element={<MyVotingHistory/>}/>
             <Route path="/myElections/:id" exact element={<ModifyElection/>}/>
             <Route path="/myElections" element={<MyElections/>}/>
             <Route path="/createElection" exact element={<CreateElection/>}/>
-            <Route path="/:id" exact element={<ViewElection/>}/>
-            <Route path="/vote" exact element={<VotingPage/>}/>
         </Switch>
     )
 }

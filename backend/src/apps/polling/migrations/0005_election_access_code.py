@@ -7,13 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('polling', '0004_remove_election_description_and_more'),
+        ("polling", "0004_remove_election_description_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='election',
-            name='access_code',
-            field=models.CharField(default=apps.polling.models.election_model.election_code_generator, editable=False, max_length=8, verbose_name='Access Code'),
+            model_name="election",
+            name="access_code",
+            field=models.CharField(default=apps.polling.models.election_model.election_code_generator, editable=False, max_length=8, verbose_name="Access Code"),
         ),
     ]

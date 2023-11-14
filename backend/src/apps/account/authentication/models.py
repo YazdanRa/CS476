@@ -1,11 +1,11 @@
-from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
 
 from django.utils.translation import gettext_lazy as _
 
-from apps.account.authentication.managers import OneTimePasswordManager
+from apps.account.user.models import User
+from apps.account.authentication.managers import OneTimePasswordManager, ResetPasswordManager
 
 
 def random_auth_code_string():
@@ -88,6 +88,8 @@ class RestPasswordRequest(models.Model):
     last_modified = models.DateTimeField(verbose_name=_("Last Modified"), auto_now=True)
     date_used = models.DateTimeField(verbose_name=_("Date Used"), null=True, default=None)
 
+    objects = ResetPasswordManager()
+
     class Meta:
         verbose_name = _("Password Reset")
         verbose_name_plural = _("Password Resets")
@@ -105,7 +107,11 @@ class RestPasswordRequest(models.Model):
     def is_used(self):
         return self.date_used is not None
 
-    def send_password_reset_email(self, **kwargs):
+    def set_used(self):
+        self.date_used = timezone.now()
+        self.save()
+
+    def send_reset_password_email(self, **kwargs):
         from django.core.mail import send_mail
 
         send_mail(
